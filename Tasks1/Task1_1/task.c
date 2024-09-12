@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <math.h>
-//test1
+
 int main()
 {
 	int x = 2.0;
