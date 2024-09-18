@@ -17,16 +17,8 @@ double get_R(double R1, double R2, double R3);
 * @return возвращает значение, если выполнено успешно, или ошибку, если иначе
 */
 
-double get_input()
-{
-	double input;
-	if (scanf_s("%lf", &input) != 1 || (input <= 0))
-	{
-		printf("Input error");
-		exit(EXIT_FAILURE);
-	}
-	return input;
-}
+double get_input();
+
 int main()
 {
 	double R1, R2, R3, R;
@@ -36,6 +28,17 @@ int main()
 	R = get_R(R1, R2, R3);
 	printf("Final R = %lf", R);
 
+}
+
+double get_input()
+{
+	double input;
+	if (scanf_s("%lf", &input) != 1 || (input <= 0))
+	{
+		printf("Input error");
+		exit(EXIT_FAILURE);
+	}
+	return input;
 }
 
 double get_R(double R1, double R2, double R3)
