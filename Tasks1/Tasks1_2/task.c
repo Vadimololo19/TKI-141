@@ -36,7 +36,7 @@ double get_input()
 {
 	double input;
 
-	if (scanf_s("%lf", &input) != 1) {
+	if ((scanf_s("%lf", &input) != 1) || (input <= 0)) {
 		printf("Input error");
 		exit(EXIT_FAILURE);
 	}
