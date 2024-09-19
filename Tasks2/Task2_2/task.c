@@ -1,25 +1,21 @@
 ﻿#include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+
 /**
 * @brief Функция проверки введенных значений.
 * @return возвращает значение, если выполнено успешно, или ошибку, если иначе
 */
-
 double get_input();
 
 /**
 * @brief Точка входа
-* @param a - значение константы, данной по задаче
-* @param x = значение переменной, заданной пользователем
 * @param y - значение функции
 */
-
 int main()
 {
 	const double a = 0.9;
-	double x, y;
-	x = get_input();
+	double x = get_input(), y;
 	if (x > 1)
 	{
 		y = a * log10(x) + sqrt(fabs(x));
