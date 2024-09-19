@@ -14,19 +14,13 @@ double get_input();
 */
 int main()
 {
-	//int hour = get_input();
-	int data[24];
 	int hour;
 	for (int i = 0; i < 24; ++i)
 	{
-		data[i] = i;
+		printf("%d\n", i);
 	}
 
-	printf("Your hour?");
-	for (int i=0; i < 24; ++i)
-	{
-		printf("%d\n", data[i]);
-	}
+	printf("Your hour?\n");
 	
 	hour = get_input();
 	if (hour >= 1 && hour < 6 )
