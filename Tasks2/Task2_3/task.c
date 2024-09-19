@@ -45,6 +45,7 @@ int main()
 	{
 		printf("Good evening");
 	}
+	return 0;
 }
 
 double get_input()
