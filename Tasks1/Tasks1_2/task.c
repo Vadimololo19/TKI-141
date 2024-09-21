@@ -24,7 +24,7 @@ double get_gb(double bytes);
 
 int main()
 {
-	double bytes,free_op,mb,gb;
+	double bytes,mb,gb;
 	bytes = get_input();
 	mb = get_mb(bytes);
 	gb = get_gb(bytes);
