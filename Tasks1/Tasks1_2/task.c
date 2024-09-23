@@ -24,10 +24,8 @@ double get_gb(double bytes);
 
 int main()
 {
-	double bytes,mb,gb;
-	bytes = get_input();
-	mb = get_mb(bytes);
-	gb = get_gb(bytes);
+	puts("Введите значение в байтах");
+	double bytes = get_input(), mb = get_mb(bytes), gb = get_gb(bytes);
 	printf("mb = %lf\ngb = %lf", mb,gb);
 	return 0;
 }
