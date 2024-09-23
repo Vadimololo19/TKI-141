@@ -21,6 +21,7 @@ double get_input();
 
 int main()
 {
+	puts("Введите значние сопротивлений трех резисторов");
 	double R1 = get_input(), R2 = get_input(), R3 = get_input(), R;
 	R = get_R(R1, R2, R3);
 	printf("Final R = %lf", R);
