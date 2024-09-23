@@ -25,12 +25,8 @@ double get_b(double x, double y, double z);
  * @return Возвращает в случае успеха.
 */
 int main() {
-	const double x = 2.0;
-	const double y = 0.7;
-	const double z = -1.0;
-
-	double a = get_a(x, y, z);
-	double b = get_b(x, y, z);
+	const double x = 2.0, y = 0.7, z = -1.0;
+	double a = get_a(x, y, z), b = get_b(x, y, z);
 
 	printf("a = %f \nb = %f", a, b);
 
