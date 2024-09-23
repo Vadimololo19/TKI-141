@@ -44,10 +44,12 @@ double get_input()
 
 double get_mb(double bytes)
 {
-	return bytes / 1048576;
+	const double mb_value = 1048576;
+	return bytes / mb_value;
 }
 
 double get_gb(double bytes)
 {
-	return bytes / 1073741824;
+	const double gb_value = 1073741824;
+	return bytes / gb_value;
 }
