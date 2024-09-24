@@ -6,8 +6,8 @@
 * @brief Функция проверки введенных значений.
 * @return возвращает значение, если выполнено успешно, или ошибку, если иначе
 */
+int get_input();
 
-double get_input();
 /**
 * @brief Точка входа
 * @return Возвращает результат врограммы
@@ -23,7 +23,7 @@ int main()
 	printf("Your hour?\n");
 
 	hour = get_input();
-	if (hour >= 1 && hour < 6)
+	if (hour >= 0 && hour < 6)
 	{
 		printf("Good night");
 	}
@@ -42,10 +42,10 @@ int main()
 	return 0;
 }
 
-double get_input()
+int get_input()
 {
-	double input;
-	if (scanf_s("%lf", &input) != 1 || (input <= 0) || (input > 24))
+	int input;
+	if (scanf_s("%d", &input) != 1 || (input < 0) || (input >= 24))
 	{
 		printf("Input error");
 		exit(EXIT_FAILURE);
