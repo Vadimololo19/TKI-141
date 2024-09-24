@@ -4,28 +4,38 @@
 
 /**
 * @brief Функция проверки введенных значений.
-* @return возвращает значение, если выполнено успешно, или ошибку, если иначе
+* @return возвращает значение, если выполнено успешно, или ошибку, если иначе.
 */
 double get_input();
 
 /**
-* @brief Точка входа
-* @param y - значение функции
+* @brief Функция счета функции при условиях.
+* @return Вовзращает значение функции при x > 1 или x <= 1.
+*/
+double get_function(double a, double x);
+
+/**
+* @brief Точка входа.
+* @param y - значение функции.
 */
 int main()
 {
 	const double a = 0.9;
-	double x = get_input(), y;
+	double x = get_input(), y = get_function(a, x);
+	printf("Function y = %lf", y);
+	return 0;
+}
+
+double get_function(double a, double x)
+{
 	if (x > 1)
 	{
-		y = a * log10(x) + sqrt(fabs(x));
+		return a * log10(x) + sqrt(fabs(x));
 	}
 	else
 	{
-		y = 2 * a * cos(x) + 3 * powl(x, 2);
+		return 2 * a * cos(x) + 3 * powl(x, 2);
 	}
-	printf("Function y = %lf", y);
-	return 0;
 }
 
 double get_input()
