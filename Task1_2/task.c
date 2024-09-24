@@ -6,7 +6,6 @@
 * @brief Функция проверки введенных данных.
 * @return Возвращает значение, если правильное, закрывает программу, если иначе.
 */
-
 double get_input();
 
 /**
@@ -15,6 +14,7 @@ double get_input();
 * @return Возвращает значение в Мегабайтах.
 */
 double get_mb(double bytes);
+
 /**
 * @brief Функция перевода байтов в гигабайты.
 * @params bytes - байты, которые ввел пользователь.
@@ -44,12 +44,12 @@ double get_input()
 
 double get_mb(double bytes)
 {
-	const double mb_value = 1048576;
+	const double mb_value = powl(2,20);
 	return bytes / mb_value;
 }
 
 double get_gb(double bytes)
 {
-	const double gb_value = 1073741824;
+	const double gb_value = powl(2,30);
 	return bytes / gb_value;
 }
