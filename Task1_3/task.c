@@ -9,22 +9,20 @@
 * @param R3 - значение третьего резистора.
 * return Рассчет сопротивления всего соединения
 */
-
-double get_R(double R1, double R2, double R3);
+double get_r(double R1, double R2, double R3);
 
 /**
 * @brief Функция проверки введенных значений.
 * @return возвращает значение, если выполнено успешно, или ошибку, если иначе
 */
-
 double get_input();
 
 int main()
 {
 	puts("Введите значние сопротивлений трех резисторов");
-	double R1 = get_input(), R2 = get_input(), R3 = get_input(), R;
-	R = get_R(R1, R2, R3);
-	printf("Final R = %lf", R);
+	double R1 = get_input(), R2 = get_input(), R3 = get_input();
+	double r = get_r(R1, R2, R3);
+	printf("Final R = %lf", r);
 
 }
 
@@ -39,7 +37,7 @@ double get_input()
 	return input;
 }
 
-double get_R(double R1, double R2, double R3)
+double get_r(double R1, double R2, double R3)
 {
 	return R1 + R2 + R3;
 }
