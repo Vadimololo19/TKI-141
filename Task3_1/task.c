@@ -24,14 +24,23 @@ double get_input();
 void check_interval(double x_start, double x_fin, double x_step);
 
 /**
+* @brief Функция счета факториала
+* @param value - Значение, от которого ищут факториал
+* @return Возвращает значение факториала
+*/
+double factorial(double value);
+
+/**
 * @brief Точка входа; в цикле for происходит перебор корней от 1 до 2 с шагом 0.1
 * @return Возвращает значение функции с заданным в цикле корнем
 */
 int main()
 {   
     const double x_start = get_input(), x_fin = get_input(), x_step = get_input();
+    double additional_n = get_input();
     check_interval(x_start, x_fin, x_step);
     get_func(x_start, x_fin, x_step);
+    printf("additional quest = %lf", factorial(additional_n));
 	return 0;
 }
 
@@ -72,4 +81,16 @@ double get_func(double x_start,double x_fin,double x_step)
         }
     }
 }
+
+double factorial(double value)
+{
+    double fact = 1;
+
+    for (int i = 1; i <= value; i++) {
+        fact *= i;
+    }
+
+    return fact;
+}
+
 
