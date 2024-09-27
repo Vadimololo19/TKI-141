@@ -4,41 +4,53 @@
 
 /**
 * @brief Функция проверки введенных значений.
+* @remarks При неправильном вводе программа будет закрыта с кодом ошибки /c EXIT_FAILURE
 * @return возвращает значение, если выполнено успешно, или ошибку, если иначе.
 */
-double get_input();
+double input();
 
 /**
 * @brief Функция счета функции при условиях.
-* @return Вовзращает значение функции при x > 1 или x <= 1.
+* @return Вовзращает значение функции если x > 1.
 */
-double get_function(double a, double x);
+double calculate_x1(double a,double x);
+
+/**
+* @brief Функция счета функции при условиях.
+* @return Вовзращает значение функции если x <= 1.
+*/
+double calculate_x2(double a, double x);
 
 /**
 * @brief Точка входа.
-* @param y - значение функции.
+* @return Возвращает с кодом ошибки.
 */
 int main()
 {
 	const double a = 0.9;
-	double x = get_input(), y = get_function(a, x);
+	double x = input(), y;
+	if (x > 1)
+	{
+		y = calculate_x1(a, x);
+	}
+	else if (x <= 1)
+	{
+		y = calculate_x2(a, x);
+	}
 	printf("Function y = %lf", y);
 	return 0;
 }
 
-double get_function(double a, double x)
+double calculate_x1(double a,double x)
 {
-	if (x > 1)
-	{
-		return a * log10(x) + sqrt(fabs(x));
-	}
-	else
-	{
-		return 2 * a * cos(x) + 3 * powl(x, 2);
-	}
+	return a * log10(x) + sqrt(fabs(x));
+}
+double calculate_x2(double a,double x)
+{
+	return 2 * a * cos(x) + 3 * powl(x, 2);
 }
 
-double get_input()
+double input()
 {
 	double input;
 	if (scanf_s("%lf", &input) != 1)
