@@ -1,63 +1,93 @@
 ﻿#include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <float.h>
+#include <stdbool.h>
 
 /**
-* @brief Функция считает нашу функцию и проверяет ее на возможность счета
-* @param y - значение функции
-* @return Возвращает значения x и y если можно посчитать, x и ошибку если нельзя
+* @brief Функция считает нашу функцию 
+* @param x - значение аргумента
+* @return Возвращает значения функции
 */
-double get_func(double x_start, double x_fin, double x_step);
+float get_equation(float x);
+
+/**
+ * @brief Проверяет, можно ли вычислить функцию для заданного значения x.
+ * @param x Значение x, которое требуется проверить.
+ * @return true, если функцию можно вычислить для данного значения x, false в противном случае.
+ */
+bool get_check_x(float x);
 
 /**
 * @brief Проверка на введенное значение
 * @return возрващает значение, если верное, иначе ошибку
 */
-double get_input();
+float input();
 
 /**
- * @brief Проверяет корректность интервала и шага.
- * @param xStart Начальное значение интервала.
- * @param xFinish Конечное значение интервала.
- * @param xStep Шаг интервала.
+ * @brief Проверяет корректность интервала.
+ * @param x_start Начальное значение интервала.
+ * @param x_fin Конечное значение интервала.
+ * @return Возвращет ошибку если интервао задан неверно
  */
-void check_interval(double x_start, double x_fin, double x_step);
+void check_interval(const float x_start, const float x_fin);
 
 /**
-* @brief Функция счета факториала
-* @param value - Значение, от которого ищут факториал
-* @return Возвращает значение факториала
+* @brief Проверяет коррекность шага
+* @param x_step Значение шага
+* @return Возвращает ошибку если шаг задан неверно
 */
-double factorial(double value);
+void check_step(const float x_step);
 
 /**
-* @brief Точка входа; в цикле for происходит перебор корней от 1 до 2 с шагом 0.1
+* @brief Точка входа
 * @return Возвращает значение функции с заданным в цикле корнем
 */
 int main()
 {   
-    const double x_start = get_input(), x_fin = get_input(), x_step = get_input();
-    double additional_n = get_input();
-    check_interval(x_start, x_fin, x_step);
-    get_func(x_start, x_fin, x_step);
-    printf("additional quest = %lf", factorial(additional_n));
+    const float x_start = input(), x_fin = input(), x_step = input();
+    check_interval(x_start, x_fin);
+    check_step(x_step);
+    float x = x_start;
+
+    while (x <= x_fin + DBL_EPSILON) {
+        if (!get_check_x(x_start)) {
+            printf("X not in function %.2f\n", x);
+        }
+        else {
+            printf("x = %f y = %f\n", x, get_equation(x));
+        }
+        x += x_step;
+    }
+
 	return 0;
 }
 
-void check_interval(double x_start, double x_fin, double x_step) {
-    if (x_fin - x_start < x_step) {
+bool get_check_x(float x) 
+{
+    return x > 0;
+}
+
+void check_interval(const float x_start, const float x_fin)
+{
+    if (x_fin - x_start < DBL_EPSILON)
+    {
         puts("Input error");
         exit(EXIT_FAILURE);
     }
-    else if (x_step <= 0) {
+}
+void check_step(const float x_step)
+{
+    if (x_step <= DBL_EPSILON)
+    {
         puts("Input error");
         exit(EXIT_FAILURE);
     }
 }
 
-double get_input() {
-    double input;
-    if (scanf_s("%lf", &input) != 1) 
+float input() {
+    float input;
+    if (scanf_s("%f", &input) != 1) 
     {
         puts("Input error");
         exit(EXIT_FAILURE);
@@ -65,32 +95,10 @@ double get_input() {
     return input;
 }
 
-double get_func(double x_start,double x_fin,double x_step)
+float get_equation(float x)
 {   
-    double y;
-    for (double i = x_start; i < x_fin + 0.01; i += x_step)
-    {   
-        y = 0.1 * powl(i, 2) - i * log(i);
-        if (!isnan(y))
-        {
-            printf("x = %lf y = %lf\n", i, 0.1 * powl(i, 2) - i * log(i));
-        }
-        else
-        {
-            printf("x = %lf Not in function\n",i);
-        }
-    }
+    return 0.1 * pow(x, 2) - x * log(x);
 }
 
-double factorial(double value)
-{
-    double fact = 1;
-
-    for (int i = 1; i <= value; i++) {
-        fact *= i;
-    }
-
-    return fact;
-}
 
 
