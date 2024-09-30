@@ -22,7 +22,7 @@ bool get_check_x(float x);
 * @brief Проверка на введенное значение
 * @return возрващает значение, если верное, иначе ошибку
 */
-float input();
+float input(void);
 
 /**
  * @brief Проверяет корректность интервала.
@@ -43,7 +43,7 @@ void check_step(const float x_step);
 * @brief Точка входа
 * @return Возвращает значение функции с заданным в цикле корнем
 */
-int main()
+int main(void)
 {   
     const float x_start = input(), x_fin = input(), x_step = input();
     check_interval(x_start, x_fin);
@@ -85,7 +85,7 @@ void check_step(const float x_step)
     }
 }
 
-float input() {
+float input(void) {
     float input;
     if (scanf_s("%f", &input) != 1) 
     {
