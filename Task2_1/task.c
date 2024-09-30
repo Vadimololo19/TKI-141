@@ -2,16 +2,6 @@
 #include <math.h>
 #include <stdlib.h>
 
-/** 
-* @brief Функкция выбора формулы для счета 
-* @param command - Выбор пользователя
-* @paran l - длина
-* @param w - ширина
-* @param h - высота
-* return Возвращает итоговое значение
-*/
-double get_final_value(int command, double l, double w, double h);
-
 /**
 * @brief Функция расчета объема
 * @param l - значение длины
@@ -45,11 +35,17 @@ double input();
 double get_above_zero_value();
 
 /**
-* @brief Функция проверки команды
+* @brief Функция проверки введенного целого числа
 * @remarks При неправильном вводе программа будет закрыта с кодом ошибки /c EXIT_FAILURE
-* @return Возвращает ошибку если команды нет в списке
+* @return Возвращает ошибку если число не integer
 */
-double get_check_command();
+int input_of_integer();
+
+enum Choice
+{
+	Volume = 1,
+	SurfaceArea = 2
+};
 
 /**
 * @brief Точка входа в функцию
@@ -57,13 +53,28 @@ double get_check_command();
 */
 int main()
 {
-	
-	printf("enter the command\n1 - calculate volume of the cube\n2 - calculate surface area of cube\n");
-	int command = get_check_command();
 	printf("Enter lenght,width and height of cube\n");
 	double l = get_above_zero_value(), w = get_above_zero_value(), h = get_above_zero_value();
-	printf("Your answer = %lf", get_final_value(command, l, w, h));
+	printf("enter the command\n1 - calculate volume of the cube\n2 - calculate surface area of cube\n");
+	int command = input_of_integer();
+	switch((enum Choice) command)
+	{
+	case Volume: printf("%lf",get_volume(l, w, h)); break;
+	case SurfaceArea: printf("%lf", get_surface_area(l, w, h)); break;
+	default: puts("Not command/Input error");
+	}
 	return 0;
+}
+
+int input_of_integer()
+{
+	int input;
+	if (scanf_s("%d", &input) != 1)
+	{
+		printf("Input error");
+		exit(EXIT_FAILURE);
+	}
+	return input;
 }
 
 double input()
@@ -88,41 +99,12 @@ double get_surface_area(double l, double h, double w)
 	return (s1 + s2 + s3) * 2;
 }
 
-enum Cube
-{
-	VolumeOfCube = 1,
-	SurfaceAreaOfCube = 2
-};
-double get_final_value(int command,double l,double h, double w)
-{
-	enum Cube cube = command;
-	if (cube == 1)
-	{
-		return get_volume(l, h, w);
-	}
-	else if(cube == 2)
-	{
-		return get_surface_area(l, h, w);
-	}
-}
-
 double get_above_zero_value()
 {
 	double input_ = input();
 	if (input_ <= 0)
 	{
 		printf("Input error");
-		exit(EXIT_FAILURE);
-	}
-	return input_;
-}
-
-double get_check_command()
-{
-	double input_ = input();
-	if ((input_ != 1) ||(input_ != 2))
-	{
-		printf("No command");
 		exit(EXIT_FAILURE);
 	}
 	return input_;
