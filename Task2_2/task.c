@@ -33,7 +33,7 @@ int main()
 	{
 		y = calculate_x1(a, x);
 	}
-	else if (x <= 1)
+	else
 	{
 		y = calculate_x2(a, x);
 	}
@@ -45,6 +45,7 @@ double calculate_x1(double a,double x)
 {
 	return a * log10(x) + sqrt(fabs(x));
 }
+
 double calculate_x2(double a,double x)
 {
 	return 2 * a * cos(x) + 3 * powl(x, 2);
