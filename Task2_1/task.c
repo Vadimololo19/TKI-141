@@ -51,7 +51,7 @@ enum Choice
 * @brief Точка входа в функцию
 * @return Возвращает код ошибки
 */
-int main()
+int main(void)
 {
 	printf("Enter lenght,width and height of cube\n");
 	double length = get_above_zero_value(), width = get_above_zero_value(), height = get_above_zero_value();
