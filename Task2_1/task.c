@@ -95,7 +95,7 @@ double get_volume(double length, double width, double height)
 
 double get_surface_area(double length, double height, double width)
 {
-	double s1 = length * height, s2 = length * width, s3 = height * width;
+	const double s1 = length * height, s2 = length * width, s3 = height * width;
 	return (s1 + s2 + s3) * 2;
 }
 
