@@ -6,7 +6,7 @@
 * @brief Проверка на верно введенные данные
 * @return Возвращает ошибку при неудаче, иначе возрващает введенные нами данные
 */
-double get_input();
+double input(void);
 
 /**
 * @brief Функция счета факториала
@@ -24,22 +24,22 @@ double factorial(double value);
 double summ(double n, double e);
 
 /**
-* @brief Функция поиска числа удовлетворяющего заданному условию
-* @return возрващает данные числа
+* @brief Функция проверяет на 0
+* @remarks При неправильном вводе программа будет закрыта с кодом ошибки /c EXIT_FAILURE
+* @return Возвращает ошибку если число 0 или меньше, или значение если все хорошо
 */
-int additional_quest();
+double get_above_zero_value(void);
 
 /**
 * @brief Точка входа
 * @return Возвращает значение функции с кодом ошибки 0
 */
-int main()
+int main(void)
 {
 	puts("Enter high value and then low value of summ");
-	double x = get_input(), e = get_input(), func;
-	func = summ(x,e);
+	double n = get_above_zero_value(), e = get_above_zero_value(), func;
+	func = summ(n,e);
 	printf("%lf30\n", func);
-	additional_quest();
 	return 0;
 }
 
@@ -67,10 +67,10 @@ double factorial(double value)
 	return fact;
 }
 
-double get_input() 
+double input(void) 
 {
 	double input;
-	if (scanf_s("%lf", &input) != 1 || input < 0) 
+	if (scanf_s("%lf", &input) != 1) 
 	{
 		printf("Input error");
 		exit(EXIT_FAILURE);
@@ -78,18 +78,13 @@ double get_input()
 	return input;
 }
 
-int additional_quest()
+double get_above_zero_value(void)
 {
-	int first, second, third, four;
-	for (int i = 1000; i < 10000; i++)
+	double input_ = input();
+	if (input_ <= 0)
 	{
-		first = i / 1000;
-		second = i / 100 % 10;
-		third = i / 10 % 10;
-		four = i % 10;
-		if ((first + four == second + third) && (i % 6 == 0) && (i % 27 == 0))
-		{
-			printf("Additional task = %d\n",i);
-		}
+		printf("Input error");
+		exit(EXIT_FAILURE);
 	}
+	return input_;
 }
