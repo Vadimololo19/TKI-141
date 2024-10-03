@@ -4,42 +4,42 @@
 
 /**
 * @brief Функция расчета объема
-* @param l - значение длины
-* @param w - значение ширины
-* @param h - значение высоты
+* @param length - значение длины
+* @param width - значение ширины
+* @param height - значение высоты
 * @return Вывод объема
 */
-double get_volume(double l, double w, double h);
+double get_volume(double length, double width, double height);
 
 /**
 * @brief Функция расчета площади
-* @param l - значение длины
-* @param w - значение ширины
-* @param h - значение высоты
+* @param length - значение длины
+* @param width - значение ширины
+* @param height - значение высоты
 * @return Выводит итоговую площадь
 */
-double get_surface_area(double l, double w, double h);
+double get_surface_area(double length, double width, double height);
 
 /**
 * @brief Функция проверки введенных значений.
 * @remarks При неправильном вводе программа будет закрыта с кодом ошибки /c EXIT_FAILURE
 * @return возвращает значение, если выполнено успешно, или ошибку, если иначе
 */
-double input();
+double input(void);
 
 /**
 * @brief Функция проверяет на 0
 * @remarks При неправильном вводе программа будет закрыта с кодом ошибки /c EXIT_FAILURE
 * @return Возвращает ошибку если число 0 или меньше, или значение если все хорошо
 */
-double get_above_zero_value();
+double get_above_zero_value(void);
 
 /**
 * @brief Функция проверки введенного целого числа
 * @remarks При неправильном вводе программа будет закрыта с кодом ошибки /c EXIT_FAILURE
 * @return Возвращает ошибку если число не integer
 */
-int input_of_integer();
+int input_of_integer(void);
 
 enum Choice
 {
@@ -54,19 +54,19 @@ enum Choice
 int main()
 {
 	printf("Enter lenght,width and height of cube\n");
-	double l = get_above_zero_value(), w = get_above_zero_value(), h = get_above_zero_value();
+	double length = get_above_zero_value(), width = get_above_zero_value(), height = get_above_zero_value();
 	printf("enter the command\n1 - calculate volume of the cube\n2 - calculate surface area of cube\n");
 	int command = input_of_integer();
 	switch((enum Choice) command)
 	{
-	case Volume: printf("%lf",get_volume(l, w, h)); break;
-	case SurfaceArea: printf("%lf", get_surface_area(l, w, h)); break;
+	case Volume: printf("%lf",get_volume(length, width, height)); break;
+	case SurfaceArea: printf("%lf", get_surface_area(length, width, height)); break;
 	default: puts("Not command/Input error");
 	}
 	return 0;
 }
 
-int input_of_integer()
+int input_of_integer(void)
 {
 	int input;
 	if (scanf_s("%d", &input) != 1)
@@ -77,7 +77,7 @@ int input_of_integer()
 	return input;
 }
 
-double input()
+double input(void)
 {
 	double input;
 	if (scanf_s("%lf", &input) != 1)
@@ -88,18 +88,18 @@ double input()
 	return input;
 }
 
-double get_volume(double l, double w, double h)
+double get_volume(double length, double width, double height)
 {
-	return l * w * h;
+	return length * width * height;
 }
 
-double get_surface_area(double l, double h, double w)
+double get_surface_area(double length, double height, double width)
 {
-	double s1 = l * h, s2 = l * w, s3 = h * w;
+	double s1 = length * height, s2 = length * width, s3 = height * width;
 	return (s1 + s2 + s3) * 2;
 }
 
-double get_above_zero_value()
+double get_above_zero_value(void)
 {
 	double input_ = input();
 	if (input_ <= 0)
