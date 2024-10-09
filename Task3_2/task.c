@@ -1,89 +1,86 @@
 ﻿#include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <float.h>
 
-/**
-* @brief Проверка на верно введенные данные
-* @return Возвращает ошибку при неудаче, иначе возрващает введенные нами данные
-*/
-double input(void);
-
-/**
-* @brief Функция счета факториала
-* @param value - Значение факториал которого надо найти
-* @return Возвращает значение факториала
-*/
-double factorial(double value);
-
-/**
-* @brief Функция считает сумму нескольких значений
-* @param n - Верхнее значение последовательности
-* @param e - Нижнее значение последовательсности
-* @return Возвращает значение суммы 
-*/
-double summ(double n, double e);
-
-/**
-* @brief Функция проверяет на 0
-* @remarks При неправильном вводе программа будет закрыта с кодом ошибки /c EXIT_FAILURE
-* @return Возвращает ошибку если число 0 или меньше, или значение если все хорошо
-*/
-double get_above_zero_value(void);
-
+float get_current(int k);
+float get_sum(int n);
+float get_sum_e(int e,int n);
+int get_count(void);
+void check_interval(int e, int n);
+int check_zero_value(void);
 /**
 * @brief Точка входа
 * @return Возвращает значение функции с кодом ошибки 0
 */
 int main(void)
 {
-	puts("Enter high value and then low value of summ");
-	double n = get_above_zero_value(), e = get_above_zero_value(), func;
-	func = summ(n,e);
-	printf("%lf30\n", func);
+	puts("Enter counts of values.");
+	int count = check_zero_value();
+	puts("Enter accuracy of calculation.");
+	int e = check_zero_value();
+	check_interval(e, count);
+	printf("Summ of %d member of the sequence: %f\n", count, get_sum(count));
+	printf("Summ of member of the sequence with accuracy: %f\n", get_sum_e(e,count));
+	
 	return 0;
 }
-
-double summ(double n,double e)
+//enum and switchcase
+// a_k_1 = (-1)/(2*k*(2*k+1)) * a_k where a_k = (-1) / (2 * n * (2 * n + 1)) where n = 1
+float get_current(int k)
 {
-	double temporary_value, value = 0;
-	for (int i = ceil(e); i < n + 1; i++)
+	return (-1.0) / (2 * k * (2 * k + 1));
+}
+float get_sum(int n)
+{
+	float current = -(1/6.0);
+	float sum = current;
+
+	for (int i = 1; i < n; i++) 
 	{
-		temporary_value = pow(-1, i - 1) / factorial(2 * i - 1);
-		value += temporary_value;
-		temporary_value = 0;
-	}
-	return value;
-
-}
-
-double factorial(double value)
-{
-	double fact = 1;
-
-	for (int i = 1; i <= value; i++) {
-		fact *= i;
+		current *= get_current(i);
+		sum += current;
 	}
 
-	return fact;
+	return sum;
 }
-
-double input(void) 
+float get_sum_e(int e,int n) 
 {
-	double input;
-	if (scanf_s("%lf", &input) != 1) 
+	float current = get_current(e);
+	float sum = current;
+
+	for (int i = e; i < n; i++)
+	{
+		current *= get_current(i);
+		sum += current;
+	}
+
+	return sum;
+}
+int get_count(void)
+{
+	int input;
+	if (scanf_s("%d", &input) != 1)
 	{
 		printf("Input error");
 		exit(EXIT_FAILURE);
 	}
 	return input;
 }
-
-double get_above_zero_value(void)
+void check_interval(int e, int n)
 {
-	double input_ = input();
+	if (n < e)
+	{
+		puts("Error of Interval");
+		exit(EXIT_FAILURE);
+	}
+}
+int check_zero_value(void)
+{
+	int input_ = get_count();
 	if (input_ <= 0)
 	{
-		printf("Input error");
+		puts("Error Input");
 		exit(EXIT_FAILURE);
 	}
 	return input_;
