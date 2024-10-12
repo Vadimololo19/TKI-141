@@ -18,14 +18,6 @@ float get_current(int k);
 float get_sum(int n);
 
 /**
-* @brief Функция считает сумму с e-ного элемента по n-ный элемент.
-* @param e - нижнее значение.
-* @param n - верхнее значение.
-* @return Возвращает значение суммы.
-*/
-float get_sum_e(int e,int n);
-
-/**
 * @brief Функция проверки ввода значения.
 * @remarks При неправильном вводе программа будет закрыта с кодом ошибки /c EXIT_FAILURE.
 * @return возвращает значение при успешном вводе.
@@ -59,7 +51,7 @@ int main(void)
 	int e = check_zero_value();
 	check_interval(e, count);
 	printf("Summ of %d member of the sequence: %f\n", count, get_sum(count));
-	printf("Summ of member of the sequence with accuracy: %f\n", get_sum_e(e,count));
+	printf("Summ of member of the sequence with start: %f\n", get_sum(count)-get_sum(e-1));
 	
 	return 0;
 }
@@ -73,20 +65,7 @@ float get_sum(int n)
 	float current = -(1/6.0);
 	float sum = current;
 
-	for (int i = 1; i < n; i++) 
-	{
-		current *= get_current(i);
-		sum += current;
-	}
-
-	return sum;
-}
-float get_sum_e(int e,int n) 
-{
-	float current = get_current(e);
-	float sum = current;
-
-	for (int i = e; i < n; i++)
+	for (int i = 1; i < n + DBL_EPSILON; i++) 
 	{
 		current *= get_current(i);
 		sum += current;
