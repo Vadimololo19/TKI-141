@@ -1,4 +1,4 @@
-#define _USE_MATH_DEFINES
+п»ї#define _USE_MATH_DEFINES
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,65 +6,65 @@
 #include <float.h>
 
 /**
-* @brief Функция считает сумму с 1 по n-ный элемент.
-* @param n - значение задаваемое пользователем.
-* @return Возвращает значение суммы.
+* @brief Р¤СѓРЅРєС†РёСЏ СЃС‡РёС‚Р°РµС‚ СЃСѓРјРјСѓ СЃ 1 РїРѕ n-РЅС‹Р№ СЌР»РµРјРµРЅС‚.
+* @param n - Р·РЅР°С‡РµРЅРёРµ Р·Р°РґР°РІР°РµРјРѕРµ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј.
+* @return Р’РѕР·РІСЂР°С‰Р°РµС‚ Р·РЅР°С‡РµРЅРёРµ СЃСѓРјРјС‹.
 */
-float get_sum(float low_value, float high_value, float epsilon);
+double get_sum(double low_value, double high_value, double epsilon);
 
 /**
-* @brief Функция проверки ввода значения.
-* @remarks При неправильном вводе программа будет закрыта с кодом ошибки /c EXIT_FAILURE.
-* @return возвращает значение при успешном вводе.
+* @brief Р¤СѓРЅРєС†РёСЏ РїСЂРѕРІРµСЂРєРё РІРІРѕРґР° Р·РЅР°С‡РµРЅРёСЏ.
+* @remarks РџСЂРё РЅРµРїСЂР°РІРёР»СЊРЅРѕРј РІРІРѕРґРµ РїСЂРѕРіСЂР°РјРјР° Р±СѓРґРµС‚ Р·Р°РєСЂС‹С‚Р° СЃ РєРѕРґРѕРј РѕС€РёР±РєРё /c EXIT_FAILURE.
+* @return РІРѕР·РІСЂР°С‰Р°РµС‚ Р·РЅР°С‡РµРЅРёРµ РїСЂРё СѓСЃРїРµС€РЅРѕРј РІРІРѕРґРµ.
 */
-float input(void);
+double input(void);
 
 /**
-* @brief Высчитывет рекурентую функцию
-* @param x - значение аргумента
-* @param n - индекс взятого элемента
-* @return Возвращает посчитанную рекурентную функцию
+* @brief Р’С‹СЃС‡РёС‚С‹РІРµС‚ СЂРµРєСѓСЂРµРЅС‚СѓСЋ С„СѓРЅРєС†РёСЋ
+* @param x - Р·РЅР°С‡РµРЅРёРµ Р°СЂРіСѓРјРµРЅС‚Р°
+* @param n - РёРЅРґРµРєСЃ РІР·СЏС‚РѕРіРѕ СЌР»РµРјРµРЅС‚Р°
+* @return Р’РѕР·РІСЂР°С‰Р°РµС‚ РїРѕСЃС‡РёС‚Р°РЅРЅСѓСЋ СЂРµРєСѓСЂРµРЅС‚РЅСѓСЋ С„СѓРЅРєС†РёСЋ
 */
-float get_current(float x, int n);
+double get_current(double x, int n);
 
 /**
-* @brief Высчитывает заданную функцию
-* @param x - значение аргумента
-* @return Возвращает значение функции
+* @brief Р’С‹СЃС‡РёС‚С‹РІР°РµС‚ Р·Р°РґР°РЅРЅСѓСЋ С„СѓРЅРєС†РёСЋ
+* @param x - Р·РЅР°С‡РµРЅРёРµ Р°СЂРіСѓРјРµРЅС‚Р°
+* @return Р’РѕР·РІСЂР°С‰Р°РµС‚ Р·РЅР°С‡РµРЅРёРµ С„СѓРЅРєС†РёРё
 */
-float get_function(float x);
+double get_function(double x);
 
 /**
-* @brief Удобный вывод всех значений
-* @param x - значение аргумента
-* @param function - значение функции
-* @param summ - значение суммы 
+* @brief РЈРґРѕР±РЅС‹Р№ РІС‹РІРѕРґ РІСЃРµС… Р·РЅР°С‡РµРЅРёР№
+* @param x - Р·РЅР°С‡РµРЅРёРµ Р°СЂРіСѓРјРµРЅС‚Р°
+* @param function - Р·РЅР°С‡РµРЅРёРµ С„СѓРЅРєС†РёРё
+* @param summ - Р·РЅР°С‡РµРЅРёРµ СЃСѓРјРјС‹ 
 */
-void get_output(float x, float function, float summ);
+void get_output(double x, double function, double summ);
 
 /**
-* @brief Функция проверки интервала
-* @param low_value - нижнее значение интервала
-* @param high_value - верхнее значение интервала
-* @remarks завершает с /c EXIT_FAILURE если интервал не удовлетворяет требованиям
-* @return возврщает true если выполняется условие
+* @brief Р¤СѓРЅРєС†РёСЏ РїСЂРѕРІРµСЂРєРё РёРЅС‚РµСЂРІР°Р»Р°
+* @param low_value - РЅРёР¶РЅРµРµ Р·РЅР°С‡РµРЅРёРµ РёРЅС‚РµСЂРІР°Р»Р°
+* @param high_value - РІРµСЂС…РЅРµРµ Р·РЅР°С‡РµРЅРёРµ РёРЅС‚РµСЂРІР°Р»Р°
+* @remarks Р·Р°РІРµСЂС€Р°РµС‚ СЃ /c EXIT_FAILURE РµСЃР»Рё РёРЅС‚РµСЂРІР°Р» РЅРµ СѓРґРѕРІР»РµС‚РІРѕСЂСЏРµС‚ С‚СЂРµР±РѕРІР°РЅРёСЏРј
+* @return РІРѕР·РІСЂС‰Р°РµС‚ true РµСЃР»Рё РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ СѓСЃР»РѕРІРёРµ
 */
-float check_interval(float low_value, float high_value);
+double check_interval(double low_value, double high_value);
 
 /**
-* @brief Функция проверки шага
-* @param h_step - значение шага
-* @remarks завершает с /c EXIT_FAILURE если шаг не удовлетворяет требованиям
-* @return возвращает true если выполянется условие
+* @brief Р¤СѓРЅРєС†РёСЏ РїСЂРѕРІРµСЂРєРё С€Р°РіР°
+* @param h_step - Р·РЅР°С‡РµРЅРёРµ С€Р°РіР°
+* @remarks Р·Р°РІРµСЂС€Р°РµС‚ СЃ /c EXIT_FAILURE РµСЃР»Рё С€Р°Рі РЅРµ СѓРґРѕРІР»РµС‚РІРѕСЂСЏРµС‚ С‚СЂРµР±РѕРІР°РЅРёСЏРј
+* @return РІРѕР·РІСЂР°С‰Р°РµС‚ true РµСЃР»Рё РІС‹РїРѕР»СЏРЅРµС‚СЃСЏ СѓСЃР»РѕРІРёРµ
 */
-float check_step(float h_step);
+double check_step(double h_step);
 
 
 int main(void)
 {
-	float const epsilon = pow(20, -4),low_value = input(), high_value = input(), h_step = input();
+	double const epsilon = pow(20, -4),low_value = input(), high_value = input(), h_step = input();
 	
-	float x = low_value;
+	double x = low_value;
 	while (x <= high_value + DBL_EPSILON)
 	{
 		get_output(x, get_function(x), get_sum(x,high_value,epsilon));
@@ -74,23 +74,23 @@ int main(void)
 	return 0;
 }
 
-void get_output(float x, float function, float summ)
+void get_output(double x, double function, double summ)
 {
-	printf("%10.1f | %15.6f | %15.6f\n", x, function, summ);
+	printf("%10.1lf | %15.6lf | %15.6lf\n", x, function, summ);
 }
 
-float get_current(float x,int n)
+double get_current(double x,int n)
 {
 	return pow((n+1)/(2*x),-1);
 }
 
-float get_sum(float low_value,float high_value, float epsilon)
+double get_sum(double low_value,double high_value, double epsilon)
 {
-	float current = low_value;
-	float sum = 0;
+	double current = low_value;
+	double sum = 0;
 	int n = 0;
 
-	while (current > epsilon - DBL_EPSILON) //
+	while (current > epsilon - DBL_EPSILON) 
 	{
 		sum += current;
 		current *= get_current(low_value, n);
@@ -99,28 +99,28 @@ float get_sum(float low_value,float high_value, float epsilon)
 
 	return sum;
 }
-float get_function(float x)
+double get_function(double x)
 {
 	return pow(M_E, 2 * x);
 }
-float input(void)
+double input(void)
 {
-	float input;
-	if (scanf_s("%f", &input) != 1)
+	double input;
+	if (scanf_s("%lf", &input) != 1)
 	{
 		printf("Input error");
 		exit(EXIT_FAILURE);
 	}
 	return input;
 }
-float check_interval(float low_value, float high_value)
+double check_interval(double low_value, double high_value)
 {
 	if (high_value - low_value < DBL_EPSILON) {
 		printf("Interval error");
 		exit(EXIT_FAILURE);
 	}
 }
-float check_step(float h_step)
+double check_step(double h_step)
 {
 	if (h_step < DBL_EPSILON) 
 	{
