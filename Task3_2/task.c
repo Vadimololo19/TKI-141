@@ -78,7 +78,7 @@ int main(void)
 	int count = check_zero_value();
 	puts("Enter accuracy of calculation.");
 	float e = check_zero_value_e();
-	//check_e(e);
+	check_e(e);
 	check_interval(e, count);
 	printf("Summ of %d member of the sequence: %f\n", count, get_sum_n(count));
 	printf("Summ of member of the sequence with start: %f\n", get_sum(e));
