@@ -8,14 +8,14 @@
 * @param k - Параметр, заданный пользователем.
 * @return Возвращает посчитанную функцию при k.
 */
-float get_current(int k);
+float get_current(const int k);
 
 /**
 * @brief Функция считает сумму с 1 по n-ный элемент.
 * @param n - значение задаваемое пользователем.
 * @return Возвращает значение суммы.
 */
-float get_sum(float e);
+float get_sum(const float e);
 
 /**
 * @brief Функция проверки ввода значения.
@@ -30,7 +30,7 @@ int get_count(void);
 * @param n - верхнее значение интервала.
 * @remarks При неправильной проверке программа будет закрыта с кодом ошибки /c EXIT_FAILURE.
 */
-void check_interval(float e, int n);
+void check_interval(const float e, const int n);
 
 /**
 * @brief Функция проверки на ноль.
@@ -45,14 +45,14 @@ int check_zero_value(void);
 * @remarks При неправильном вводе программа будет закрыта с кодом ошибки /c EXIT_FAILURE.
 * @return Возвращает e если без ошибки
 */
-void check_e(float e);
+void check_e(const float e);
 
 /**
 * @brief Функция счета суммы по n-ому члену
 * @param n - переменна заданная пользователем
 * @return Фукнция возвращает значение суммы по n-ому члену
 */
-float get_sum_n(int n);
+float get_sum_n(const int n);
 
 /**
 * @brief Фукнция счета суммы с погрешностью e
