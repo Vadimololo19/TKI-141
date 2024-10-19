@@ -90,6 +90,11 @@ int main()
 	}
 }
 
+/**
+* @brief Выбор исполняемой функции
+* @param fill_random - заполнение случайными числами
+* @param fill_input - заполнение числами пользователя
+*/
 enum Task
 {
 	fill_random = 1,
@@ -102,7 +107,7 @@ void fill_array(const int command, int* array,int low_value,int high_value)
 	{
 	case fill_random: fill_by_random(array, low_value, high_value); break;
 	case fill_input: fill_by_input(array,low_value,high_value); break;
-	default: puts("Command error"); break;
+	default: puts("Command error"); exit(EXIT_FAILURE);
 	}
 }
 
