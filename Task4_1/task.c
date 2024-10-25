@@ -10,7 +10,7 @@
 * @param size_array - размер массива
 * @remarks при неправильном вводе команды выводит ошибку
 */
-void fill_array(const int command, int* array, int low_value, int size_array);
+void fill_array(const int command, size_t* array, int low_value, int size_array);
 
 /**
 * @brief Функция заполнения массива интервалом, который задал пользователь
@@ -18,7 +18,7 @@ void fill_array(const int command, int* array, int low_value, int size_array);
 * @param low_value - начало массива
 * @param size_array - размер массива
 */
-void fill_by_input(int* array, int size_array);
+void fill_by_input(size_t* array, int size_array);
 
 /**
 * @brief Функция заполнения массива случайными числами
@@ -26,14 +26,14 @@ void fill_by_input(int* array, int size_array);
 * @param low_value - начало массива
 * @param size_array - размер массива
 */
-void fill_by_random(int* array, int low_value, int size_array);
+void fill_by_random(size_t* array, int low_value, int size_array);
 
 /**
 * @brief Функция вывода массива
 * @param array - массив, задаваемый пользователем
 * @param size_array - размер массива
 */
-void print_array(int* array, int size_array);
+void print_array(size_t* array, int size_array);
 
 /**
 * @brief Функция ввода значения пользователем
@@ -47,7 +47,7 @@ int input(void);
 * @param size_array - размер массива
 * @return Возвращает сумму чисел согласно условию
 */
-int task1(int* arr, int size_array);
+int task1(size_t* arr, int size_array);
 
 /**
 * @brief Функция выполнения задания 2
@@ -55,7 +55,7 @@ int task1(int* arr, int size_array);
 * @param size_array - размер массива
 * @remarks Выводит индексы согласно условию
 */
-void task2(int* arr, int size_array);
+void task2(size_t* arr, int size_array);
 
 /**
 * @brief Функция выполнения задания 3
@@ -63,7 +63,7 @@ void task2(int* arr, int size_array);
 * @param size_array - размер массива
 * @remarks Выводит измененный массив
 */
-void task3(int* arr, int size_array);
+void task3(size_t* arr, int size_array);
 
 /**
 * @brief Точка входа
@@ -98,7 +98,7 @@ enum Task
 	fill_input,
 };
 
-void fill_array(const int command, int* array,int low_value,int size_array)
+void fill_array(const int command, size_t* array,int low_value,int size_array)
 {
 	switch ((enum Task)command)
 	{
@@ -108,7 +108,7 @@ void fill_array(const int command, int* array,int low_value,int size_array)
 	}
 }
 
-void fill_by_input(int* array, int size_array)
+void fill_by_input(size_t* array, int size_array)
 {
 	for (int i = 0; i < size_array; i++)
 	{
@@ -116,7 +116,7 @@ void fill_by_input(int* array, int size_array)
 	}
 }
 
-void fill_by_random(int* array,int low_value, int size_array)
+void fill_by_random(size_t* array,int low_value, int size_array)
 {
 	for (int i = 0; i < size_array; i++)
 	{
@@ -135,7 +135,7 @@ int input(void)
 	return input;
 }
 
-void print_array(int* array, int size_array)
+void print_array(size_t* array, int size_array)
 {
 	puts("[");
 	for (int i = 0; i < size_array; i++)
@@ -145,7 +145,7 @@ void print_array(int* array, int size_array)
 	puts("]");
 }
 
-int task1(int* arr,int size_array)
+int task1(size_t* arr,int size_array)
 {
 	int s = 0;
 	for (int i = 0; i < size_array; i++)
@@ -158,7 +158,7 @@ int task1(int* arr,int size_array)
 	return s;
 }
 
-void task2(int* arr, int size_array)
+void task2(size_t* arr, int size_array)
 {
 	for (int i = 0; i < size_array; i++)
 	{
@@ -169,7 +169,7 @@ void task2(int* arr, int size_array)
 	}
 }
 
-void task3(int* arr, int size_array)
+void task3(size_t* arr, int size_array)
 {
 	for (int i = 0; i < size_array; i++)
 	{
