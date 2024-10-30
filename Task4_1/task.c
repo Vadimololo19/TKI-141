@@ -71,6 +71,12 @@ void task2(const int* arr, const size_t size_array);
 */
 void task3(int* arr, const size_t size_array);
 
+/**
+* @brief Функция проверки меньшего и большего значений интервала выбора чисел для рандомного заполнения массива
+* @param low_value - меньшее значение
+* @param high_value - большее значение
+* @remarks при непрохождении проверки возвращает код ошибки /c EXIT_FAILURE
+*/
 void check_interval(const int low_value, const int high_value);
 
 /**
