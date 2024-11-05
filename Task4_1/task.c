@@ -67,9 +67,9 @@ void task2(const int* arr, const size_t size_array);
 * @brief Функция выполнения задания 3
 * @param arr - массив, задаваемый пользователем
 * @param size_array - размер массива
-* @remarks Выводит измененный массив
+* @return Возвращает измененный массив
 */
-void task3(int* arr, const size_t size_array);
+int* task3(int* arr, const size_t size_array);
 
 /**
 * @brief Функция проверки меньшего и большего значений интервала выбора чисел для рандомного заполнения массива
@@ -78,6 +78,21 @@ void task3(int* arr, const size_t size_array);
 * @remarks при непрохождении проверки возвращает код ошибки /c EXIT_FAILURE
 */
 void check_interval(const int low_value, const int high_value);
+
+/**
+* @brief Функция проверки массива
+* @param arr - массив, который мы проверяем на NULL
+* @remarks при непрохождении проверки возвращает код ошибки /c EXIT_FAILURE
+*/
+void Check_array(int* const arr);
+
+/**
+* @brief Функция перекопирования массива 
+* @param arr - изачальный массив
+* @param size_array - размер массивов
+* @return Возвращает массив со значениями изначального массива
+*/
+int* Copy_array(int* const arr, size_t size_array);
 
 /**
 * @brief Выбор исполняемой функции
@@ -99,26 +114,43 @@ int main(void)
 	srand(time(NULL));
 	puts("Enter command,size of array, low and high value of array");
 	int command = input();
-	int* arr;
 	size_t size_array = get_above_zero_value();
 	int low_value = input(), high_value = input();
 	check_interval(low_value, high_value);
-	arr = (int*)malloc(size_array * sizeof(int));
+	int* arr = (int*)malloc(size_array * sizeof(int));
+	Check_array(arr);
+	fill_array(command, arr, low_value, high_value, size_array);
+	print_array(arr, size_array);
+	int* arr1 = Copy_array(arr, size_array), *arr2 = Copy_array(arr, size_array), *arr3 = Copy_array(arr, size_array);
+	printf("task1: %d\n", task1(arr1, size_array));
+	free(arr1);
+	puts("task2: ");
+	task2(arr2, size_array);
+	free(arr2);
+	puts("task3: ");
+	print_array(task3(arr3, size_array), size_array);
+	free(arr3);
+	free(arr);
+	return 0;
+}
+
+int* Copy_array(int* const arr, size_t size_array)
+{
+	int* arr_ = (int*)malloc(size_array * sizeof(int));
+	for (size_t i = 0; i < size_array; i++)
+	{
+		arr_[i] = arr[i];
+	}
+	return arr_;
+}
+
+void Check_array(int* const arr)
+{
 	if (arr == NULL)
 	{
 		printf("Memory input");
 		exit(EXIT_FAILURE);
 	}
-	fill_array(command, arr, low_value, high_value, size_array);
-	print_array(arr, size_array);
-	printf("task1: %d\n", task1(arr, size_array));
-	puts("task2: ");
-	task2(arr, size_array);
-	puts("task3: ");
-	task3(arr, size_array);
-	free(arr);
-
-	return 0;
 }
 
 void check_interval(const int low_value, const int high_value)
@@ -181,7 +213,7 @@ size_t get_above_zero_value(void)
 void print_array(const int* array, const size_t size_array)
 {
 	puts("[");
-	for (int i = 0; i < size_array; i++)
+	for (size_t i = 0; i < size_array; i++)
 	{
 		printf("%d,", array[i]);
 	}
@@ -212,7 +244,7 @@ void task2(const int* arr, const size_t size_array)
 	}
 }
 
-void task3(int* arr, const size_t size_array)
+int* task3(int* arr, const size_t size_array)
 {
 	for (int i = 0; i < size_array; i++)
 	{
@@ -221,6 +253,6 @@ void task3(int* arr, const size_t size_array)
 			arr[i] *= arr[2];
 		}
 	}
-	print_array(arr, size_array);
+	return arr;
 }
 
