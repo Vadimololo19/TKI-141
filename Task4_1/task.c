@@ -87,12 +87,18 @@ void check_interval(const int low_value, const int high_value);
 void Check_array(int* const arr);
 
 /**
-* @brief Функция перекопирования массива 
+* @brief Функция перекопирования массива
 * @param arr - изачальный массив
 * @param size_array - размер массивов
 * @return Возвращает массив со значениями изначального массива
 */
 int* Copy_array(int* const arr, size_t size_array);
+/**
+ * @brief Функция создания массива
+ * @param size_array - размер создаваемого массива
+ * @return возвращает созданный по размеру массив
+ */
+int* Create_array(size_t const size_array);
 
 /**
 * @brief Выбор исполняемой функции
@@ -117,26 +123,32 @@ int main(void)
 	size_t size_array = get_above_zero_value();
 	int low_value = input(), high_value = input();
 	check_interval(low_value, high_value);
-	int* arr = (int*)malloc(size_array * sizeof(int));
+	int* arr = Create_array(size_array);
 	Check_array(arr);
 	fill_array(command, arr, low_value, high_value, size_array);
 	print_array(arr, size_array);
-	int* arr1 = Copy_array(arr, size_array), *arr2 = Copy_array(arr, size_array), *arr3 = Copy_array(arr, size_array);
-	printf("task1: %d\n", task1(arr1, size_array));
-	free(arr1);
+	int* arr_ = Copy_array(arr, size_array);
+	printf("task1: %d\n", task1(arr_, size_array));
 	puts("task2: ");
-	task2(arr2, size_array);
-	free(arr2);
+	task2(arr_, size_array);
 	puts("task3: ");
-	print_array(task3(arr3, size_array), size_array);
-	free(arr3);
+	print_array(task3(arr_, size_array), size_array);
+	free(arr_);
 	free(arr);
 	return 0;
 }
 
+int* Create_array(size_t const size_array)
+{
+	int* arr = (int*)malloc(size_array * sizeof(int));
+	Check_array(arr);
+	return arr;
+}
+
 int* Copy_array(int* const arr, size_t size_array)
 {
-	int* arr_ = (int*)malloc(size_array * sizeof(int));
+	int* arr_ = Create_array(size_array);
+	Check_array(arr_);
 	for (size_t i = 0; i < size_array; i++)
 	{
 		arr_[i] = arr[i];
@@ -174,7 +186,7 @@ void fill_array(const int command, int* array, const int low_value, const int hi
 
 void fill_by_input(int* array, const size_t size_array)
 {
-	for (int i = 0; i < size_array; i++)
+	for (size_t i = 0; i < size_array; i++)
 	{
 		array[i] = input();
 	}
@@ -182,7 +194,7 @@ void fill_by_input(int* array, const size_t size_array)
 
 void fill_by_random(int* array, const int low_value, const int high_value, const size_t size_array)
 {
-	for (int i = 0; i < size_array; i++)
+	for (size_t i = 0; i < size_array; i++)
 	{
 		array[i] = rand() % (high_value - low_value + 1) + low_value;
 	}
@@ -223,7 +235,7 @@ void print_array(const int* array, const size_t size_array)
 int task1(const int* arr, const size_t size_array)
 {
 	int s = 0;
-	for (int i = 0; i < size_array; i++)
+	for (size_t i = 0; i < size_array; i++)
 	{
 		if (abs(arr[i]) < 10)
 		{
@@ -235,7 +247,7 @@ int task1(const int* arr, const size_t size_array)
 
 void task2(const int* arr, const size_t size_array)
 {
-	for (int i = 0; i < size_array - 1; i++)
+	for (size_t i = 0; i < size_array - 1; i++)
 	{
 		if ((arr[i] > arr[i + 1]))
 		{
@@ -246,7 +258,7 @@ void task2(const int* arr, const size_t size_array)
 
 int* task3(int* arr, const size_t size_array)
 {
-	for (int i = 0; i < size_array; i++)
+	for (size_t i = 0; i < size_array; i++)
 	{
 		if (arr[i] % 3 == 0)
 		{
