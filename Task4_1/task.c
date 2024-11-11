@@ -154,7 +154,6 @@ int* create_array(size_t const size_array)
 int* copy_array(int* const arr, const size_t size_array)
 {
 	int* arr_ = create_array(size_array);
-	check_array(arr_);
 	for (size_t i = 0; i < size_array; i++)
 	{
 		arr_[i] = arr[i];
@@ -202,7 +201,7 @@ void fill_by_random(int* array, const int low_value, const int high_value, const
 {
 	for (size_t i = 0; i < size_array; i++)
 	{
-		array[i] = rand() % (high_value - low_value + 1) - low_value;
+		array[i] = rand() % (high_value - low_value + 1) + low_value;
 	}
 }
 
