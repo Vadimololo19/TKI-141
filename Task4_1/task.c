@@ -69,7 +69,7 @@ void task2(const int* arr, const size_t size_array);
 * @param size_array - размер массива
 * @return Возвращает измененный массив
 */
-int* task3(int* arr, const size_t size_array);
+void task3(int* arr, const size_t size_array);
 
 /**
 * @brief Функция проверки меньшего и большего значений интервала выбора чисел для рандомного заполнения массива
@@ -84,7 +84,7 @@ void check_interval(const int low_value, const int high_value);
 * @param arr - массив, который мы проверяем на NULL
 * @remarks при непрохождении проверки возвращает код ошибки /c EXIT_FAILURE
 */
-void Check_array(int* const arr);
+void check_array(int* const arr);
 
 /**
 * @brief Функция перекопирования массива
@@ -92,13 +92,19 @@ void Check_array(int* const arr);
 * @param size_array - размер массивов
 * @return Возвращает массив со значениями изначального массива
 */
-int* Copy_array(int* const arr, size_t size_array);
+int* copy_array(int* const arr, const size_t size_array);
 /**
  * @brief Функция создания массива
  * @param size_array - размер создаваемого массива
  * @return возвращает созданный по размеру массив
  */
-int* Create_array(size_t const size_array);
+int* create_array(size_t const size_array);
+
+/**
+* @brief Функция проверки наличия 3-го элемента для задания 3
+* @remarks Завершает программу с кодом ошибки /c EXIT_FAILURE если в массиве меньше 3-х элементов
+*/
+void check_third_element(const size_t size_array);
 
 /**
 * @brief Выбор исполняемой функции
@@ -123,32 +129,32 @@ int main(void)
 	size_t size_array = get_above_zero_value();
 	int low_value = input(), high_value = input();
 	check_interval(low_value, high_value);
-	int* arr = Create_array(size_array);
-	Check_array(arr);
+	int* arr = create_array(size_array);
 	fill_array(command, arr, low_value, high_value, size_array);
 	print_array(arr, size_array);
-	int* arr_ = Copy_array(arr, size_array);
+	int* arr_ = copy_array(arr, size_array);
 	printf("task1: %d\n", task1(arr_, size_array));
 	puts("task2: ");
 	task2(arr_, size_array);
 	puts("task3: ");
-	print_array(task3(arr_, size_array), size_array);
+	task3(arr_, size_array);
+	print_array(arr_, size_array);
 	free(arr_);
 	free(arr);
 	return 0;
 }
 
-int* Create_array(size_t const size_array)
+int* create_array(size_t const size_array)
 {
 	int* arr = (int*)malloc(size_array * sizeof(int));
-	Check_array(arr);
+	check_array(arr);
 	return arr;
 }
 
-int* Copy_array(int* const arr, size_t size_array)
+int* copy_array(int* const arr, const size_t size_array)
 {
-	int* arr_ = Create_array(size_array);
-	Check_array(arr_);
+	int* arr_ = create_array(size_array);
+	check_array(arr_);
 	for (size_t i = 0; i < size_array; i++)
 	{
 		arr_[i] = arr[i];
@@ -156,7 +162,7 @@ int* Copy_array(int* const arr, size_t size_array)
 	return arr_;
 }
 
-void Check_array(int* const arr)
+void check_array(int* const arr)
 {
 	if (arr == NULL)
 	{
@@ -196,7 +202,7 @@ void fill_by_random(int* array, const int low_value, const int high_value, const
 {
 	for (size_t i = 0; i < size_array; i++)
 	{
-		array[i] = rand() % (high_value - low_value + 1) + low_value;
+		array[i] = rand() % (high_value - low_value + 1) - low_value;
 	}
 }
 
@@ -256,8 +262,9 @@ void task2(const int* arr, const size_t size_array)
 	}
 }
 
-int* task3(int* arr, const size_t size_array)
+void task3(int* arr, const size_t size_array)
 {
+	check_third_element(size_array);
 	for (size_t i = 0; i < size_array; i++)
 	{
 		if (arr[i] % 3 == 0)
@@ -265,6 +272,13 @@ int* task3(int* arr, const size_t size_array)
 			arr[i] *= arr[2];
 		}
 	}
-	return arr;
 }
 
+void check_third_element(const size_t size_array)
+{
+	if (size_array < 2)
+	{
+		printf("Task 3 cannot be completed");
+		exit(EXIT_FAILURE);
+	}
+}
