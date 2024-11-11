@@ -163,7 +163,6 @@ int* create_array(size_t const size_array)
 int* copy_array(int* const arr, const size_t size_array)
 {
 	int* arr_ = create_array(size_array);
-	check_array(arr_);
 	for (size_t i = 0; i < size_array; i++)
 	{
 		arr_[i] = arr[i];
@@ -211,7 +210,7 @@ void fill_by_random(int* array, const int low_value, const int high_value, const
 {
 	for (size_t i = 0; i < size_array; i++)
 	{
-		array[i] = rand() % (high_value - low_value + 1) - low_value;
+		array[i] = rand() % (high_value - low_value + 1) + low_value;
 	}
 }
 
@@ -249,17 +248,15 @@ void print_array(const int* array, const size_t size_array)
 
 void task1(int* arr, const size_t size_array)
 {
-	int min = INT_MAX;
-	int k = 0;
+	int min_index= 0;
 	for (size_t i = 0; i < size_array; i++)
 	{
-		if ((arr[i] < min) && (arr[i] > 0))
+		if ((arr[i] < arr[min_index]) && (arr[i] > 0))
 		{
-			min = arr[i];
-			k = i;
+			min_index = i;
 		}
 	}
-	arr[k] = 0;
+	arr[min_index] = 0;
 }
 
 void task2(int* arr, const size_t size_array)
@@ -288,16 +285,16 @@ void remove_element(int* arr,size_t size_array,const size_t delete_value)
 
 void task3(int* arr, const size_t size_array)
 {
-	int* D = arr;
+	
 	for (size_t i = 0; i < size_array; i++)
 	{
 		if ((i < 3) && (i > 12))
 		{
-			arr[i] = D[i] - 1;
+			arr[i] = arr[i] - 1;
 		}
 		else
 		{
-			arr[i] = -pow(D[i], 2);
+			arr[i] = -pow(arr[i], 2);
 		}
 	}
 }
