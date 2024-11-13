@@ -91,8 +91,9 @@ void task1(int* arr, const size_t size_array);
 * @param arr - массив котороый мы изменяем
 * @param size_array - размер нашего массива
 * @remarks Удаляет из массива все элементы, первая и последняя цифры которого четные
+* @return Возвращает новый размер, по которому мы построим массив, аналогичный измененному по заданию, но без мусора
 */
-void task2(int* arr, const size_t size_array);
+size_t task2(int* arr, const size_t size_array);
 
 /**
 * @brief Функция удаления элемента из массива
@@ -141,8 +142,10 @@ int main(void)
 	int* arr1 = copy_array(arr, size_array), *arr2 = copy_array(arr,size_array), *arr3 = copy_array(arr,size_array);
 	task1(arr1, size_array);
 	print_array(arr1, size_array);
-	task2(arr2, size_array);
-	print_array(arr2, size_array);
+
+	size_t new_size = task2(arr2, size_array);
+	print_array(arr2, new_size);
+
 	task3(arr3, size_array);
 	print_array(arr3, size_array);
 	
@@ -259,19 +262,23 @@ void task1(int* arr, const size_t size_array)
 	arr[min_index] = 0;
 }
 
-void task2(int* arr, const size_t size_array)
+size_t task2(int* arr, const size_t size_array)
 {
+	size_t deleted_size = 0;
 	for (size_t i = 0; i < size_array; i++)
 	{
 		if (((arr[i] / 10) % 2 == 0) && (((arr[i] % 10) % 2) == 0) && (arr[i] % 10 > 1))
 		{
 			remove_element(arr, size_array, i);
+			deleted_size += 1;
 		}
 		else if ((arr[i] % 10 < 1) && (arr[i] % 2 == 0))
 		{
 			remove_element(arr, size_array, i);
+			deleted_size += 1;
 		}
 	}
+	return size_array - deleted_size;
 }
 
 void remove_element(int* arr,size_t size_array,const size_t delete_value) 
