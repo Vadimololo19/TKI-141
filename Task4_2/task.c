@@ -3,6 +3,7 @@
 #include <math.h>
 #include <time.h>
 #include <limits.h>
+#include <stdbool.h>
 
 /**
 * @brief Функция выбора метода заполнения массива пользователем
@@ -88,21 +89,13 @@ void task1(int* arr, const size_t size_array);
 
 /**
 * @brief Функция выполнения второго задания
-* @param arr - массив котороый мы изменяем
-* @param size_array - размер нашего массива
-* @remarks Удаляет из массива все элементы, первая и последняя цифры которого четные
-* @return Возвращает новый размер, по которому мы построим массив, аналогичный измененному по заданию, но без мусора
+* @param arr1 - изначальный массив
+* @param size_array1 - размер изначального массива
+* @param arr2 - заполняемый массив
+* @paran size_array2 - размер нового массива
+* @return Возвращает новый массив по заданию
 */
-size_t task2(int* arr, const size_t size_array);
-
-/**
-* @brief Функция удаления элемента из массива
-* @param arr - массив, который изменяем
-* @param size_array - размер нашего массива
-* @param delete_value - элемент который мы удаляем
-* @remarks удаляет элемент из массива
-*/
-void remove_element(int* arr, size_t size_array, const size_t delete_value);
+void task2(const int* arr1, int* arr2,const size_t size_array1, size_t size_array2);
 
 /**
 * @brief Функция выполнения третьего задания
@@ -111,6 +104,21 @@ void remove_element(int* arr, size_t size_array, const size_t delete_value);
 * @remarks Из элементов массива D сформировать массив A той же размерности по правилу: элементы с 3-го по 12-й находятся по формуле Ai = -Di2, остальные по формуле Ai = Di-1
 */
 void task3(int* arr, const size_t size_array);
+
+/**
+* @brief Функция получения нового размера для задания 2
+* @param arr - изначальный массив
+* @param size_array - размер изначального массива
+* @return возвращает размер нового массива для задания 2
+*/
+size_t get_new_size(const int* arr, const size_t size_array);
+
+/**
+* @brief Функция првоверки первой и последней цифры в числе
+* @param value - число, цифра которой мы проверяем
+* @return возвращает True или False в зависимости от результатов проверки
+*/
+bool check_digits(const int value);
 
 /**
 * @brief Выбор исполняемой функции
@@ -139,20 +147,25 @@ int main(void)
 	fill_array(command, arr, low_value, high_value, size_array);
 	print_array(arr, size_array);
 
-	int* arr1 = copy_array(arr, size_array), *arr2 = copy_array(arr,size_array), *arr3 = copy_array(arr,size_array);
+	size_t task2_size = get_new_size(arr, size_array);
+
+	int* arr1 = copy_array(arr, size_array),*arr2 = copy_array(arr,task2_size), *arr3 = copy_array(arr,size_array);
 	task1(arr1, size_array);
 	print_array(arr1, size_array);
+	free(arr1);
 
-	size_t new_size = task2(arr2, size_array);
-	print_array(arr2, new_size);
+	
+	task2(arr, arr2,size_array,task2_size);
+	print_array(arr2, task2_size);
+	free(arr2);
 
 	task3(arr3, size_array);
 	print_array(arr3, size_array);
+	free(arr3);
 	
 	free(arr);
-	free(arr1);
-	free(arr2);
-	free(arr3);
+	
+	
 	return 0;
 }
 
@@ -262,31 +275,56 @@ void task1(int* arr, const size_t size_array)
 	arr[min_index] = 0;
 }
 
-size_t task2(int* arr, const size_t size_array)
+size_t get_new_size(const int* arr, const size_t size_array)
 {
-	size_t deleted_size = 0;
-	for (size_t i = 0; i < size_array; i++)
+	size_t new_size = 0;
+	for (size_t i = 0; i < size_array - 1; ++i)
 	{
-		if (((arr[i] / 10) % 2 == 0) && (((arr[i] % 10) % 2) == 0) && (arr[i] % 10 > 1))
+		int last_digit = arr[i] % 10; 
+		int first_digit = arr[i];
+		while (arr[i] >= 10)
 		{
-			remove_element(arr, size_array, i);
-			deleted_size += 1;
+			first_digit /= 10;
 		}
-		else if ((arr[i] % 10 < 1) && (arr[i] % 2 == 0))
+		if (check_digits(arr[i]))
 		{
-			remove_element(arr, size_array, i);
-			deleted_size += 1;
+			new_size += 1;
 		}
 	}
-	return size_array - deleted_size;
+	return new_size;
 }
 
-void remove_element(int* arr,size_t size_array,const size_t delete_value) 
+bool check_digits(const int value)
 {
-	for (size_t i = delete_value; i < size_array; i++)
+	int last_digit = value % 10;
+	int first_digit = value;
+	while (value >= 10)
 	{
-		arr[i] = arr[i + 1];
-		size_array--;
+		first_digit /= 10;
+	}
+	if ((first_digit % 2 == 0 && last_digit % 2 == 0) || (value < 10 && first_digit % 2 == 0))
+	{
+		return true;
+	}
+	return false;
+}
+
+void task2(const int* arr1, int* arr2, size_t size_array1, size_t size_array2)
+{
+	int count = 0;
+	for (size_t i = 0; i < size_array1; i++)
+	{
+		int last_digit = arr1[i] % 10;
+		int first_digit = arr1[i];
+		while (arr1[i] >= 10)
+		{
+			first_digit /= 10;
+		}
+		if (check_digits(arr1[i]))
+		{
+			arr2[count] = arr1[i];
+			count++;
+		}
 	}
 }
 
