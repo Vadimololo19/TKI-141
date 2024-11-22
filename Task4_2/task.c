@@ -278,7 +278,7 @@ void task1(int* arr, const size_t size_array)
 size_t get_new_size(const int* arr, const size_t size_array)
 {
 	size_t new_size = 0;
-	for (size_t i = 0; i < size_array - 1; ++i)
+	for (size_t i = 0; i < size_array; ++i)
 	{
 		int last_digit = arr[i] % 10; 
 		int first_digit = arr[i];
