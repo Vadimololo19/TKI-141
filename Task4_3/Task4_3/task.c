@@ -1,278 +1,316 @@
 ﻿#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include <time.h>
-#include <malloc.h>
+#include <stdlib.h>
 
 /**
-* @brief Функция ввода числа пользователем
-* @remarks При несовпадении форматов возвращает ошибку с кодом /c EXIT_FAILURE
+* @brief Функция ввода целого числа.
+* @return целое число.
 */
 int input(void);
 
-/** 
-* @brief Функция заполнения матрицы числами пользователя
-* @param lines - переменная, содержащая количество линий
-* @param columns - массив, содержащий столбцы
-* @param matrix - матрица, которую необходимо заполнить
-* @remarks Заполняет матрицу числами пользователя
+/**
+* @brief Функция выделения памяти.
+* @param rows значение параметра rows.
+* @param column значение параметра column.
+* @return массив.
 */
-void fill_array_input(int lines, int* columns, int** matrix);
+int** create_array(const size_t rows, const size_t column);
 
 /**
-* @brief Функция заполнения матрицы случайными числами
-* @param lines - переменная, содержащая количество линий
-* @param columns - массив, содержащий столбцы
-* @param matrix - матрица, которую необходимо заполнить
-* @remarks Заполняет матрицу случайными числами
+* @brief Функция копирования массива.
+* @param array передаёт массив array.
+* @param rows значение параметра rows.
+* @param column значение параметра column.
+* @return массив.
 */
-void fill_array_random(int lines, int* columns, int** matrix);
+int** copy_array(const int** array, const size_t rows, const size_t column);
 
 /**
-* @brief Фукнция вывода матрицы
-* @param lines - переменная, содержащая количество линий
-* @param columns - массив, содержащий столбцы
-* @param matrix - матрица со значениями
-* @remarks Выводит в консоль матрицу
+* @brief Функция проверки массива на пустоту.
+* @param arr указатель на массив.
 */
-void output_array(int lines, int* columns, int** matrix);
+void check_array(const int** arr);
 
 /**
-* @brief Фукнция выполнения задания 1
-* @param lines - переменная, содержащая количество линий
-* @param columns - массив, содержащий столбцы
-* @param matrix - матрица со значениями
-* @remarks Выводит матрицу согласно заданию
+* @brief Функция заполнения массива случайными числами.
+* @param array передаёт массив array.
+* @param rows значение параметра rows.
+* @param column значение параметра column.
 */
-void task1(int lines, int* columns, int** matrix);
+void fill_random(int** array, const size_t rows, const size_t column);
 
 /**
-* @brief Фукнция выполнения задания 2
-* @param lines - переменная, содержащая количество линий
-* @param columns - массив, содержащий столбцы первой матрицы
-* @param matrix - первая матрица, содержащая значения
-* @param columns2 - массив, содержащий столбцы второй матрицы
-* @param matrix2 - вторая матрица, содержащая значения, столбцы увеличены вдвое
-* @remarks Выводит матрицу согласно заданию
+* @brief Функция заполнения массива вводимыми числами.
+* @param array передаёт массив array.
+* @param rows значение параметра rows.
+* @param column значение параметра column.
 */
-void task2(int lines, int* columns, int** matrix, int* columns2, int** matrix2);
+void fill_input(int** array, const size_t rows, const size_t column);
 
 /**
-* @brief Функция обертка для заполения матрицы
-* @param lines - переменная, содержащая количество линий
-* @param columns - массив, содержащий столбцы
-* @param matrix - матрица со значениями
-* @remarks Дает пользователю выбор как заполнить матрицу
-*/
-void fill_array(int lines, int* columns, int** matrix);
-
-/**
-* @brief Функция нахождения максимального значения в матрице
-* @param lines - переменная, содержащая количество линий
-* @param columns - массив, содержащий столбцы
-* @param matrix - матрица со значениями
-* @return Возвращает максимальное значение матрицы
-*/
-int find_max(int** matrix, int lines, int* columns);
-
-/**
-* @brief Фукнция нумератор команд
-* @remarks fill_random с кодом 1 - команда заполнения случайными числами
-* @remarks fill_input с кодом 2 - команда заполнения числами пользователя
-* @remarks defaul - выход с ошибкой
+* @brief Функция-нумератор.
+* @param input вызов функции ввода.
+* @param random вызов функции заполнения.
 */
 enum Task
 {
-    fill_random = 1,
-    fill_input,
+    user_input = 1,
+    random_input,
 };
 
 /**
-* @brief Точка входа
-* @return Возвращает код ошибки 0
+* @brief Функция вывода массива.
+* @param array передаёт массив.
+* @param rows количество строк.
+* @param column количество столбцов.
+*/
+void print_array(int** array, const size_t rows, const size_t column);
+
+/**
+* @brief Функция заполнения массива
+* @param command - переменная команды заданной пользователем
+* @param array - наш массив
+* @param rows - строки массива
+* @param column - столбцы массива
+*/
+void fill_array(const int command, int** array, const size_t rows, const size_t column);
+
+/**
+* @brief Функция выполнения задания 1
+* @param array_copy - копия массива для безопасного взаимодейтсвия 
+* @param rows - строки массива
+* @param column - столбцы массива
+* @remarksВыполняет заданеи 1
+*/
+void task1(int** array_copy, const size_t rows, const size_t column);
+
+/**
+* @brief Функция нахождения максимального значения в массиве
+* @param array - наш массив
+* @param rows - строки массива
+* @param column - столбцы массива
+* return возвращает максимальное значение в массиве
+*/
+int find_max(int** array, const size_t rows, const size_t column);
+
+/**
+* @brief Функция выполнения задания 2
+* @param array - исходный массив
+* @param rows - строки исходного массива
+* @param column - столбцы исходного массива
+* @param array2 - новый расширенный массив
+* @param column2 - рассширенное кол-во столбцов
+* @param max - максимальное значение из массива
+* @param actual_rows - фактическое количество строк
+* @remarks Выполняет задание 2
+*/
+void task2(int** array, const size_t rows, const size_t column, int** array2, const size_t column2, const int max, size_t* actual_rows);
+
+/**
+* @brief Функция полной чистки массива
+* @param array - наш массив
+* @param rows - строки массива
+*/
+void free_array(int** array, const size_t rows);
+
+/**
+ * @brief Точка входа в программу.
+ * @return Возвращает в случае успеха.
 */
 int main(void)
 {
-    srand(time(NULL));
-    puts("Enter the lines count");
-    int lines = input();
-    int** matrix = (int**)malloc(lines * sizeof(int*));
-    int* columns = (int*)malloc(lines * sizeof(int));
+    puts("Rows:");
+    const size_t rows = input();
+    puts("Column:");
+    const size_t column = input();
+    puts("1 for user input, 2 for random input");
+    const int command = input();
 
-    int** matrix2 = (int**)malloc(lines * sizeof(int*));
-    int* columns2 = (int*)malloc((lines*2) * sizeof(int));
+    int** array = create_array(rows, column);
+    fill_array(command, array, rows, column);
+    print_array(array, rows, column);
 
-    int max = find_max(matrix, lines, columns);
-    fill_array(lines, columns, matrix);
-    output_array(lines, columns, matrix);
-    puts("task1: ");
-    fill_array(lines, columns, matrix);
-    task1(lines, columns, matrix);
-    free(matrix);
-    puts("task2: ");
-    fill_array(lines, columns, matrix);
-    task2(lines, columns, matrix, columns2, matrix2);
+    puts("Task1");
+    int** array_copy1 = copy_array(array, rows, column);
+    task1(array_copy1, rows, column);
+    print_array(array_copy1, rows, column);
+    free(array_copy1);
+
+    puts("Task2");
+    const int max = find_max(array, rows, column);
+    const size_t column2 = column; 
+    int** array2 = create_array(rows * 2, column2); 
+    size_t actual_rows = 0; 
+    task2(array, rows, column, array2, column2, max, &actual_rows);
+    print_array(array2, actual_rows, column2);
+
+    free_array(array, rows);
+    free(array);
+    free_array(array2, actual_rows);
+    free(array2);
+
     return 0;
 }
 
-void fill_array(int lines, int* columns, int** matrix)
+void free_array(int** array,const size_t rows)
 {
-    puts("Enter command");
-    int command = input();
+    for (size_t i = 0; i < rows; i++) 
+    {
+        free(array[i]);
+    }
+}
+
+void fill_array(const int command, int** array, const size_t rows, const size_t column)
+{
     switch ((enum Task)command)
     {
-    case fill_random: fill_array_random(lines, columns, matrix); break;
-    case fill_input: fill_array_input(lines, columns, matrix); break;
-    default: puts("Command error"); exit(EXIT_FAILURE);
+    case user_input: fill_input(array, rows, column); break;
+    case random_input: fill_random(array, rows, column); break;
+    default: printf("Incorrect value"); exit(EXIT_FAILURE);
     }
 }
 
-void fill_array_random(int lines, int* columns, int** matrix)
+int input()
 {
-    for (int i = 0; i < lines; i++)
+    int input = 0;
+    if (scanf_s("%d", &input) != 1)
     {
-        printf("Enter a value of columns of %d string: ", i);
-        columns[i] = input();
-        matrix[i] = (int*)malloc(columns[i] * sizeof(int));
-        for (int j = 0; j < columns[i]; j++)
+        printf("Incorrect value");
+        exit(EXIT_FAILURE);
+    }
+    return input;
+}
+
+int** create_array(const size_t rows, const size_t column)
+{
+    int** array = (int**)malloc(sizeof(int*) * rows);
+    for (size_t i = 0; i < rows; i++)
+    {
+        array[i] = (int*)malloc(sizeof(int) * column);
+    }
+    check_array(array);
+    return array;
+}
+
+int** copy_array(const int** array, const size_t rows, const size_t column)
+{
+    check_array(array);
+    int** array_copy = (int**)malloc(sizeof(int*) * rows);
+    for (size_t i = 0; i < rows; i++)
+    {
+        array_copy[i] = (int*)malloc(sizeof(int) * column);
+    }
+    for (size_t x = 0; x < rows; x++)
+    {
+        for (size_t y = 0; y < column; y++)
         {
-            matrix[i][j] = rand() % ((9 + 1) + 1);
-            printf("a[%d][%d]= %d \n", i, j,matrix[i][j]);
+            array_copy[x][y] = array[x][y];
+        }
+    }
+    check_array(array_copy);
+    return array_copy;
+}
+
+void check_array(const int** arr)
+{
+    if (arr == NULL)
+    {
+        printf("Memory not allocated.\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+void fill_random(int** array, const size_t rows, const size_t column)
+{
+    srand(time(NULL));
+    for (size_t x = 0; x < rows; x++)
+    {
+        for (size_t y = 0; y < column; y++)
+        {
+            array[x][y] = rand() % 100;
         }
     }
 }
 
-void fill_array_input(int lines, int* columns,int** matrix)
+void fill_input(int** array, const size_t rows, const size_t column)
 {
-    for (int i = 0; i < lines; i++)
+    for (size_t x = 0; x < rows; x++)
     {
-        printf("Enter a value of columns of %d string: ", i);
-        columns[i] = input();
-        matrix[i] = (int*)malloc(columns[i] * sizeof(int));
-        for (int j = 0; j < columns[i]; j++)
+        for (size_t y = 0; y < column; y++)
         {
-            printf("a[%d][%d]= ", i, j);
-            matrix[i][j] = input();
+            array[x][y] = input();
         }
     }
 }
 
-void output_array(int lines,int* columns,int** matrix)
+void print_array(int** array, const size_t rows, const size_t column)
 {
-    for (int i = 0; i < lines; i++)
+    for (size_t x = 0; x < rows; x++)
     {
-        for (int j = 0; j < columns[i]; j++)
+        for (size_t y = 0; y < column; y++)
         {
-            printf("%3d ", matrix[i][j]);
+            printf("%d ", array[x][y]);
         }
         printf("\n");
     }
 }
 
-int input(void)
+void task1(int** array_copy, const size_t rows, const size_t columns)
 {
-	int input;
-	if (scanf_s("%d", &input) != 1)
-	{
-		printf("Input error");
-		exit(EXIT_FAILURE);
-	}
-	return input;
+    for (size_t y = 0; y < columns; y++)
+    {
+        int min = INT_MAX;
+        size_t min_row = 0;
+        for (size_t x = 0; x < rows; x++)
+        {
+            if (array_copy[x][y] < min)
+            {
+                min = array_copy[x][y];
+                min_row = x;
+            }
+        }
+        array_copy[min_row][y] = 0;
+    }
 }
 
-void task1(int lines, int* columns, int** matrix)
+int find_max(int** array, const size_t rows, const size_t column)
 {
-    int min = 100;
-    int** A = matrix;
-    for (int i = 0; i < lines; i++)
+    int max = array[0][0];
+    for (size_t x = 0; x < rows; x++)
     {
-        for (int j = 0; j < columns[i]; j++)
+        for (size_t y = 0; y < column; y++)
         {
-            if (min > A[j][i])
+            if (abs(array[x][y]) >= abs(max))
             {
-                min = A[j][i];
-            }
-        }
-        for (int j = 0; j < columns[i]; j++)
-        {
-            if (min == A[j][i])
-            {
-                A[j][i] = 0;
-            }
-        }
-    }
-    output_array(lines, columns, A);
-}
-
-void task2(int lines,int* columns,int** matrix,int* columns2, int** matrix2)
-{
-    int** A = matrix;
-    int** A_ = matrix2;
-    int count = 0;
-    for (int i = 0; i < lines; i++)
-    {
-        for (int j = 0; j < columns[i]; j++)
-        {
-            count++;
-        }
-    }
-    puts("--------------------------");
-    output_array(lines, columns, A);
-    for (int n = 0; n < lines; n++)
-    {
-        columns2[n] = columns[n]*2;
-        matrix2[n] = (int*)malloc(columns2[n] * sizeof(int));
-        for (int m = 0; m < columns2[n]; m++)
-        {
-            if (count != 0 && A[n][m] > 0)
-            {
-                A_[n][m] = A[n][m];
-                count -= 1;
-            }
-            else
-            {
-                A_[n][m] = 0;
-            }
-            
-        }
-    }
-    int max = find_max(A_, lines, columns2);
-    puts("--------------------------");
-    output_array(lines, columns2, A_);
-    for (int i = 0; i < lines; i++)
-    {
-        for (int j = 0; j < columns2[i]; j++)
-        {
-            if (A_[i][j] == max)
-            {
-                for (int k = 0; k < lines; k++)
-                {
-                    A_[i][lines+k] = A_[lines - 1][k];
-                }
-            }
-        }
-    }
-    puts("--------------------------");
-    output_array(lines, columns2, A_);
-}
-
-int find_max(int** arr, int lines, int* columns)
-{
-    int** A = arr;
-    int max = 0;
-    int max_i = 0;
-    int max_j = 0;
-    for (int i = 0; i < lines; i++)
-    {
-        for (int j = 0; j < columns[i]; j++)
-        {
-            if (max < abs(A[i][j]))
-            {
-                max = A[i][j];
-                max_i = i;
-                max_j = j;
+                max = array[x][y];
             }
         }
     }
     return max;
+}
+
+void task2(int** array, const size_t rows, const size_t column, int** array2, const size_t column2, const int max, size_t* actual_rows)
+{
+    size_t new_row = 0;
+    for (size_t x = 0; x < rows; x++)
+    {
+        for (size_t y = 0; y < column; y++)
+        {
+            array2[new_row][y] = array[x][y];
+        }
+        new_row++;
+        for (size_t y = 0; y < column; y++)
+        {
+            if (abs(array[x][y]) == abs(max))
+            {
+                for (size_t z = 0; z < column; z++)
+                {
+                    array2[new_row][z] = array[rows - 1][z];
+                }
+                new_row++;
+                break; 
+            }
+        }
+    }
+    *actual_rows = new_row; 
 }
