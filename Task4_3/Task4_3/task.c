@@ -37,7 +37,7 @@ void check_array(const int** arr);
 * @param rows значение параметра rows.
 * @param column значение параметра column.
 */
-void fill_random(int** array, const size_t rows, const size_t column);
+void fill_random(int** array, const size_t rows, const size_t column,const int low_value,const int high_value);
 
 /**
 * @brief Функция заполнения массива вводимыми числами.
@@ -64,7 +64,7 @@ enum Task
 * @param rows количество строк.
 * @param column количество столбцов.
 */
-void print_array(int** array, const size_t rows, const size_t column);
+void print_array(const int** array, const size_t rows, const size_t column);
 
 /**
 * @brief Функция заполнения массива
@@ -73,7 +73,7 @@ void print_array(int** array, const size_t rows, const size_t column);
 * @param rows - строки массива
 * @param column - столбцы массива
 */
-void fill_array(const int command, int** array, const size_t rows, const size_t column);
+void fill_array(const int command, int** array, const size_t rows, const size_t column,const int low_value,const int high_value);
 
 /**
 * @brief Функция выполнения задания 1
@@ -104,7 +104,7 @@ int find_max(int** array, const size_t rows, const size_t column);
 * @param actual_rows - фактическое количество строк
 * @remarks Выполняет задание 2
 */
-void task2(int** array, const size_t rows, const size_t column, int** array2, const size_t column2, const int max, size_t* actual_rows);
+size_t task2(int** array, const size_t rows, const size_t column, int** array2, const size_t column2, const int max);
 
 /**
 * @brief Функция полной чистки массива
@@ -114,40 +114,51 @@ void task2(int** array, const size_t rows, const size_t column, int** array2, co
 void free_array(int** array, const size_t rows);
 
 /**
+ * @brief Функция проверки введенного значени
+ * @remarks если значение 0 и меньше возвращает код ошибки /c EXIT_FAILURE
+ */
+size_t get_above_zero_value(void);
+
+/**
+ * @brief Функция проверки значений команды
+ * @remarks при непрохождении проверки возвращает код ошибки /c EXIT_FAILURE 
+ */
+int input_command(void);
+
+/**
  * @brief Точка входа в программу.
  * @return Возвращает в случае успеха.
 */
 int main(void)
 {
     puts("Rows:");
-    const size_t rows = input();
+    size_t rows = get_above_zero_value();
     puts("Column:");
-    const size_t column = input();
+    size_t column = get_above_zero_value();
+    puts("Enter low and high value of array");
+    int low_value = input(), high_value = input();
     puts("1 for user input, 2 for random input");
-    const int command = input();
+    int command = input_command();
 
     int** array = create_array(rows, column);
-    fill_array(command, array, rows, column);
+    fill_array(command, array, rows, column,low_value,high_value);
     print_array(array, rows, column);
 
     puts("Task1");
     int** array_copy1 = copy_array(array, rows, column);
     task1(array_copy1, rows, column);
     print_array(array_copy1, rows, column);
-    free(array_copy1);
+    free_array(array_copy1,rows);
 
     puts("Task2");
     const int max = find_max(array, rows, column);
     const size_t column2 = column; 
     int** array2 = create_array(rows * 2, column2); 
-    size_t actual_rows = 0; 
-    task2(array, rows, column, array2, column2, max, &actual_rows);
+    size_t actual_rows = task2(array, rows, column, array2, column2, max);
     print_array(array2, actual_rows, column2);
 
     free_array(array, rows);
-    free(array);
     free_array(array2, actual_rows);
-    free(array2);
 
     return 0;
 }
@@ -158,14 +169,15 @@ void free_array(int** array,const size_t rows)
     {
         free(array[i]);
     }
+    free(array);
 }
 
-void fill_array(const int command, int** array, const size_t rows, const size_t column)
+void fill_array(const int command, int** array, const size_t rows, const size_t column,const int low_value,const int high_value)
 {
     switch ((enum Task)command)
     {
     case user_input: fill_input(array, rows, column); break;
-    case random_input: fill_random(array, rows, column); break;
+    case random_input: fill_random(array, rows, column,low_value,high_value); break;
     default: printf("Incorrect value"); exit(EXIT_FAILURE);
     }
 }
@@ -173,7 +185,7 @@ void fill_array(const int command, int** array, const size_t rows, const size_t 
 int input()
 {
     int input = 0;
-    if (scanf_s("%d", &input) != 1)
+    if (scanf("%d", &input) != 1)
     {
         printf("Incorrect value");
         exit(EXIT_FAILURE);
@@ -195,11 +207,7 @@ int** create_array(const size_t rows, const size_t column)
 int** copy_array(const int** array, const size_t rows, const size_t column)
 {
     check_array(array);
-    int** array_copy = (int**)malloc(sizeof(int*) * rows);
-    for (size_t i = 0; i < rows; i++)
-    {
-        array_copy[i] = (int*)malloc(sizeof(int) * column);
-    }
+    int** array_copy = create_array(rows,column);
     for (size_t x = 0; x < rows; x++)
     {
         for (size_t y = 0; y < column; y++)
@@ -207,7 +215,6 @@ int** copy_array(const int** array, const size_t rows, const size_t column)
             array_copy[x][y] = array[x][y];
         }
     }
-    check_array(array_copy);
     return array_copy;
 }
 
@@ -220,14 +227,14 @@ void check_array(const int** arr)
     }
 }
 
-void fill_random(int** array, const size_t rows, const size_t column)
+void fill_random(int** array, const size_t rows, const size_t column,const int low_value, const int high_value)
 {
     srand(time(NULL));
     for (size_t x = 0; x < rows; x++)
     {
         for (size_t y = 0; y < column; y++)
         {
-            array[x][y] = rand() % 100;
+            array[x][y] = rand() % (high_value - low_value + 1) + low_value;
         }
     }
 }
@@ -243,7 +250,7 @@ void fill_input(int** array, const size_t rows, const size_t column)
     }
 }
 
-void print_array(int** array, const size_t rows, const size_t column)
+void print_array(const int** array, const size_t rows, const size_t column)
 {
     for (size_t x = 0; x < rows; x++)
     {
@@ -259,10 +266,10 @@ void task1(int** array_copy, const size_t rows, const size_t columns)
 {
     for (size_t y = 0; y < columns; y++)
     {
-        int min = INT_MAX;
         size_t min_row = 0;
         for (size_t x = 0; x < rows; x++)
         {
+            int min = array_copy[x][y];
             if (array_copy[x][y] < min)
             {
                 min = array_copy[x][y];
@@ -271,6 +278,28 @@ void task1(int** array_copy, const size_t rows, const size_t columns)
         }
         array_copy[min_row][y] = 0;
     }
+}
+
+size_t get_above_zero_value(void)
+{
+    int input_ = input();
+    if (input_ <= 0)
+    {
+        puts("Input error");
+        exit(EXIT_FAILURE);
+    }
+    return (size_t)input_;
+}
+
+int input_command(void)
+{
+    int input_ = input();
+    if((input_ < 1) || (input_ > 2))
+    {
+        puts("Input error");
+        exit(EXIT_FAILURE);
+    }
+    return input_;
 }
 
 int find_max(int** array, const size_t rows, const size_t column)
@@ -289,28 +318,36 @@ int find_max(int** array, const size_t rows, const size_t column)
     return max;
 }
 
-void task2(int** array, const size_t rows, const size_t column, int** array2, const size_t column2, const int max, size_t* actual_rows)
+size_t task2(int** array, const size_t rows, const size_t column, int** array2, const size_t column2, const int max)
 {
     size_t new_row = 0;
+
+    // Проходим по всем строкам исходного массива
     for (size_t x = 0; x < rows; x++)
     {
+        // Копируем текущую строку в новый массив
         for (size_t y = 0; y < column; y++)
         {
             array2[new_row][y] = array[x][y];
         }
         new_row++;
+
+        // Проверяем, содержит ли строка максимальный по модулю элемент
         for (size_t y = 0; y < column; y++)
         {
             if (abs(array[x][y]) == abs(max))
             {
+                // Если да, копируем последнюю строку в новый массив
                 for (size_t z = 0; z < column; z++)
                 {
                     array2[new_row][z] = array[rows - 1][z];
                 }
                 new_row++;
-                break; 
+                break;  // После добавления последней строки, идем к следующей строке
             }
         }
     }
-    *actual_rows = new_row; 
+
+    return new_row;  // Возвращаем фактическое количество строк
 }
+
