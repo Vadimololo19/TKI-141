@@ -322,32 +322,28 @@ size_t task2(int** array, const size_t rows, const size_t column, int** array2, 
 {
     size_t new_row = 0;
 
-    // Проходим по всем строкам исходного массива
     for (size_t x = 0; x < rows; x++)
     {
-        // Копируем текущую строку в новый массив
         for (size_t y = 0; y < column; y++)
         {
             array2[new_row][y] = array[x][y];
         }
         new_row++;
 
-        // Проверяем, содержит ли строка максимальный по модулю элемент
         for (size_t y = 0; y < column; y++)
         {
             if (abs(array[x][y]) == abs(max))
             {
-                // Если да, копируем последнюю строку в новый массив
                 for (size_t z = 0; z < column; z++)
                 {
                     array2[new_row][z] = array[rows - 1][z];
                 }
                 new_row++;
-                break;  // После добавления последней строки, идем к следующей строке
+                break;  
             }
         }
     }
 
-    return new_row;  // Возвращаем фактическое количество строк
+    return new_row;  
 }
 
