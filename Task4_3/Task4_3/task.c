@@ -91,7 +91,7 @@ void task1(int** array_copy, const size_t rows, const size_t column);
 * @param column - столбцы массива
 * return возвращает максимальное значение в массиве
 */
-int find_max(int** array, const size_t rows, const size_t column);
+int find_max(const int** array, const size_t rows, const size_t column);
 
 /**
 * @brief Функция выполнения задания 2
@@ -120,12 +120,6 @@ void free_array(int** array, const size_t rows);
 size_t get_above_zero_value(void);
 
 /**
- * @brief Функция проверки значений команды
- * @remarks при непрохождении проверки возвращает код ошибки /c EXIT_FAILURE 
- */
-int input_command(void);
-
-/**
  * @brief Точка входа в программу.
  * @return Возвращает в случае успеха.
 */
@@ -137,8 +131,8 @@ int main(void)
     size_t column = get_above_zero_value();
     puts("Enter low and high value of array");
     int low_value = input(), high_value = input();
-    puts("1 for user input, 2 for random input");
-    int command = input_command();
+    printf("%d for user input, %d for random input", user_input, random_input);
+    int command = input();
 
     int** array = create_array(rows, column);
     fill_array(command, array, rows, column,low_value,high_value);
@@ -151,8 +145,8 @@ int main(void)
     free_array(array_copy1,rows);
 
     puts("Task2");
-    const int max = find_max(array, rows, column);
-    const size_t column2 = column; 
+    int max = find_max(array, rows, column);
+    size_t column2 = column; 
     int** array2 = create_array(rows * 2, column2); 
     size_t actual_rows = task2(array, rows, column, array2, column2, max);
     print_array(array2, actual_rows, column2);
@@ -196,11 +190,12 @@ int input()
 int** create_array(const size_t rows, const size_t column)
 {
     int** array = (int**)malloc(sizeof(int*) * rows);
+    check_array(array);
     for (size_t i = 0; i < rows; i++)
     {
         array[i] = (int*)malloc(sizeof(int) * column);
+        check_array(array[i]);
     }
-    check_array(array);
     return array;
 }
 
@@ -291,18 +286,7 @@ size_t get_above_zero_value(void)
     return (size_t)input_;
 }
 
-int input_command(void)
-{
-    int input_ = input();
-    if((input_ < 1) || (input_ > 2))
-    {
-        puts("Input error");
-        exit(EXIT_FAILURE);
-    }
-    return input_;
-}
-
-int find_max(int** array, const size_t rows, const size_t column)
+int find_max(const int** array, const size_t rows, const size_t column)
 {
     int max = array[0][0];
     for (size_t x = 0; x < rows; x++)
