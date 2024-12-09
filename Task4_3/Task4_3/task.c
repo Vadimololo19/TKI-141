@@ -104,7 +104,7 @@ int find_max(const int** array, const size_t rows, const size_t column);
 * @param actual_rows - фактическое количество строк
 * @remarks Выполняет задание 2
 */
-size_t task2(int** array, const size_t rows, const size_t column, int** array2, const size_t column2, const int max);
+void task2(int** array, const size_t rows, const size_t column, int** array2);
 
 /**
 * @brief Функция полной чистки массива
@@ -119,6 +119,10 @@ void free_array(int** array, const size_t rows);
  */
 size_t get_above_zero_value(void);
 
+/**
+ * @brief Функция счета нового количества строк
+ * @return Возвращает количество строк, которые удовлетворяют по заданию 2
+ */
 int get_new_size(const int** array,const size_t rows,const int column);
 
 /**
@@ -147,11 +151,12 @@ int main(void)
     free_array(array_copy1,rows);
 
     puts("Task2");
-    int max = find_max(array, rows, column);
-    size_t column2 = column; 
-    int** array2 = create_array(rows + get_new_size(array,rows,column), column2); 
-    size_t actual_rows = task2(array, rows, column, array2, column2, max);
-    print_array(array2, actual_rows, column2);
+    
+    size_t actual_rows = rows + get_new_size(array,rows,column);
+    int** array2 = create_array(actual_rows, column); 
+    task2(array, rows, column, array2);
+    print_array(array2, actual_rows, column);
+    print_array(array2, actual_rows, column);
 
     free_array(array, rows);
     free_array(array2, actual_rows);
@@ -304,10 +309,10 @@ int find_max(const int** array, const size_t rows, const size_t column)
     return max;
 }
 
-size_t task2(int** array, const size_t rows, const size_t column, int** array2, const size_t column2, const int max)
+void task2(int** array, const size_t rows, const size_t column, int** array2)
 {
     size_t new_row = 0;
-
+    int max = find_max (array, rows, column);
     for (size_t x = 0; x < rows; x++)
     {
         for (size_t y = 0; y < column; y++)
@@ -328,9 +333,7 @@ size_t task2(int** array, const size_t rows, const size_t column, int** array2, 
                 break;  
             }
         }
-    }
-
-    return new_row;  
+    }  
 }
 
 int get_new_size(const int** array,const size_t rows,const int column)
