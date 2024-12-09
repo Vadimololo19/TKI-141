@@ -119,6 +119,8 @@ void free_array(int** array, const size_t rows);
  */
 size_t get_above_zero_value(void);
 
+int get_new_size(const int** array,const size_t rows,const int column);
+
 /**
  * @brief Точка входа в программу.
  * @return Возвращает в случае успеха.
@@ -147,7 +149,7 @@ int main(void)
     puts("Task2");
     int max = find_max(array, rows, column);
     size_t column2 = column; 
-    int** array2 = create_array(rows * 2, column2); 
+    int** array2 = create_array(rows + get_new_size(array,rows,column), column2); 
     size_t actual_rows = task2(array, rows, column, array2, column2, max);
     print_array(array2, actual_rows, column2);
 
@@ -329,5 +331,23 @@ size_t task2(int** array, const size_t rows, const size_t column, int** array2, 
     }
 
     return new_row;  
+}
+
+int get_new_size(const int** array,const size_t rows,const int column)
+{
+    int count = 0;
+    int max = find_max(array, rows, column);
+    for (size_t   i= 0; i < rows; i++)
+        {
+            for (size_t j = 0; j < column; j++)
+            {   
+                if (array[i][j] == max)
+                {
+                count++;
+                break;
+                }   
+            }
+        }
+    return count;
 }
 
