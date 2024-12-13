@@ -156,7 +156,6 @@ int main(void)
     int** array2 = create_array(actual_rows, column); 
     task2(array, rows, column, array2);
     print_array(array2, actual_rows, column);
-    print_array(array2, actual_rows, column);
 
     free_array(array, rows);
     free_array(array2, actual_rows);
